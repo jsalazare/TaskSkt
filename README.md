@@ -1,5 +1,7 @@
 # TaskSkt
 
+[![Build Status](https://travis-ci.com/Joxebus/TaskSkt.svg?branch=master)](https://travis-ci.com/Joxebus/TaskSkt)
+
 Create a Spring Boot application which sends or receives JSON messages through RabbitMQ or Kafka according to the Spring profile active at runtime.
 
 ### Modules
