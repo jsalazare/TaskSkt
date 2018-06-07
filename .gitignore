@@ -1,9 +1,10 @@
 /target/
-!.mvn/wrapper/maven-wrapper.jar
+##!.mvn
 !.git
 
 .project
 .settings
+##.DS_Store
 
 *.class
 
