@@ -1,7 +1,7 @@
 package org.common.dto;
 
 //Just an example
-public class UserDTO {
+public class ExampleUserDTO {
 
 	
 	private String name;
