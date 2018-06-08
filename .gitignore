@@ -1,5 +1,9 @@
-/target/
-!.mvn
+target/
+common/target/classes
+management-app/target
+microservice/target
+
+.mvn
 !.git
 
 .project
@@ -22,11 +26,3 @@
 *.iws
 *.iml
 *.ipr
-
-### NetBeans ###
-/nbproject/private/
-/build/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
