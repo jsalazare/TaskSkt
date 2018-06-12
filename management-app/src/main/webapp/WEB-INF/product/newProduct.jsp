@@ -14,8 +14,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<form autocomplete="off" action="#" th:action="@{/newUser}"
-					th:object="${user}" method="post" class="form-horizontal"
+				<form autocomplete="off" action="/newProduct"
+					  method="post" class="form-horizontal"
 					role="form">
 					<h2>Add a User</h2>
 					<div class="form-group">
@@ -28,25 +28,25 @@
 					<div class="form-group">
 						<div class="col-sm-9">
 							<input type="number"
-								placeholder="age" class="form-control" /> 
+								placeholder="length" class="form-control" /> 
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-9">
-							<input type="text" placeholder="Email"
+							<input type="text" placeholder="width"
 								class="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-9">
 							<input type="text" 
-								placeholder="Weight" class="form-control" />
+								placeholder="heigth" class="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-9">
 							<input type="text" 
-								placeholder="Height" class="form-control" />
+								placeholder="weight" class="form-control" />
 						</div>
 					</div>
 					<div class="form-group">

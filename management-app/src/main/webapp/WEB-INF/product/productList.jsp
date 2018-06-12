@@ -4,11 +4,11 @@
 <html>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.List"%>
-<%@ page import="org.common.dto.ExampleUserDTO"%>
+<%@ page import="org.common.model.Product"%>
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Users list</title>
+<title>Product list</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
@@ -22,45 +22,45 @@
 				<table class="table table-hover" style="border: 1px solid;">
 					<tr>
 						<th scope="col">Name</th>
-						<th scope="col">Age</th>
-						<th scope="col">Email</th>
-						<th scope="col">Height</th>
+						<th scope="col">Length</th>
+						<th scope="col">Width</th>
+						<th scope="col">Heigth</th>
 						<th scope="col">Weight</th>
 					</tr>
 					<%
-						List users = (ArrayList) request.getAttribute("myUsers");
+						List products = (ArrayList) request.getAttribute("myProducts");
 					%>
 
 					<%
-						for (int i = 0; i < users.size(); i++) {
-							ExampleUserDTO user = (ExampleUserDTO) users.get(i);
+						for (int i = 0; i < products.size(); i++) {
+							Product pro = (Product) products.get(i);
 					%>
 					<!-- create an html table row -->
 					<tr>
 						<!-- create cells of row -->
 						<td>
 							<%
-								out.print(user.getName());
+								out.print(pro.getName());
 							%>
 						</td>
 						<td>
 							<%
-								out.print(user.getAge());
+								out.print(pro.getLength());
 							%>
 						</td>
 						<td>
 							<%
-								out.print(user.getEmail());
+								out.print(pro.getWidth());
 							%>
 						</td>
 						<td>
 							<%
-								out.print(user.getHeigth());
+								out.print(pro.getHeigth());
 							%>
 						</td>
 						<td>
 							<%
-								out.print(user.getWeight());
+								out.print(pro.getWeight());
 							%>
 						</td>
 						<!-- close row -->

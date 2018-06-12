@@ -1,45 +1,49 @@
-package org.common.dto;
+package org.common.model;
 
-//Just an example
-public class ExampleUserDTO {
-
-	
+public class Product {
 	private String name;
-	private int age;
-	private String email;
+	private int length;
+	private int width;
 	private double heigth;
 	private double weight;
-	
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getAge() {
-		return age;
+
+	public int getLength() {
+		return length;
 	}
-	public void setAge(int age) {
-		this.age = age;
+
+	public void setLength(int length) {
+		this.length = length;
 	}
-	public String getEmail() {
-		return email;
+
+	public int getWidth() {
+		return width;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+
+	public void setWidth(int width) {
+		this.width = width;
 	}
+
 	public double getHeigth() {
 		return heigth;
 	}
+
 	public void setHeigth(double heigth) {
 		this.heigth = heigth;
 	}
+
 	public double getWeight() {
 		return weight;
 	}
+
 	public void setWeight(double weight) {
 		this.weight = weight;
 	}
-	
-	
 }
