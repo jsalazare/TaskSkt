@@ -17,7 +17,7 @@ public class ProducerService {
 	/**
      *  The name of the Queue
      */
-    private final static String QUEUE_NAME = "hello";
+    private final static String QUEUE_NAME = "management-microservice";
     private final static String USERNAME = "admin";
     private final static String PASSWORD = "admin";
     private final static String HOST = "localhost";

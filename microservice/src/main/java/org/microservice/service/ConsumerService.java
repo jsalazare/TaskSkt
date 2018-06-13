@@ -5,6 +5,7 @@ import java.util.concurrent.TimeoutException;
 
 import javax.annotation.PostConstruct;
 
+import org.common.util.Utilities;
 import org.springframework.stereotype.Service;
 
 import com.rabbitmq.client.AMQP;
@@ -18,25 +19,29 @@ import com.rabbitmq.client.Envelope;
 @Service
 public class ConsumerService {
 	
-	private final static String QUEUE_NAME = "hello";
+	/**
+	 *  This configurations should come from common Library.
+	 */
+	private final static String QUEUE_NAME = "management-microservice";
+	private final static String USERNAME = "admin";
+	private final static String PASSWORD = "admin";
+	private final static String HOST = "localhost";
 	
 	public void listenerService () {
 	    try {
 	    	ConnectionFactory factory = new ConnectionFactory();
-		    factory.setHost("localhost");
-		    factory.setUsername("admin");
-		    factory.setPassword("admin");
+		    factory.setHost(HOST);
+		    factory.setUsername(USERNAME);
+		    factory.setPassword(PASSWORD);
 		    Connection connection = factory.newConnection();
 		    Channel channel = connection.createChannel();
 			channel.queueDeclare(QUEUE_NAME, true, false, false, null);
-			System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
-
 		    Consumer consumer = new DefaultConsumer(channel) {
 		      @Override
 		      public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)
 		          throws IOException {
-		        String message = new String(body, "UTF-8");
-		        System.out.println(" [x] Received '" + message + "'");
+		    	  Object o = Utilities.fromBytes(body);
+		         System.out.println(" [x] Received '" + body + "'");
 		      }
 		    };
 		    channel.basicConsume(QUEUE_NAME, true, consumer);

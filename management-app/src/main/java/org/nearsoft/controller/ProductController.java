@@ -35,8 +35,10 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = { "/newProduct" }, method = RequestMethod.POST)
-	public void newUserSave() {
+	public void newUserSave(ProductDTO product) {
 		// Logic for saving element, maybe calling rabbit service here.
+		producerService.produceMessage(product);
+		System.out.println("print");
 	}
 
 	@RequestMapping(value = { "/productList" }, method = RequestMethod.GET)
