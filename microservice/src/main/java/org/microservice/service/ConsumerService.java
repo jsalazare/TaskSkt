@@ -5,7 +5,10 @@ import java.util.concurrent.TimeoutException;
 
 import javax.annotation.PostConstruct;
 
+import org.common.dto.ProductDTO;
 import org.common.util.Utilities;
+import org.microservice.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rabbitmq.client.AMQP;
@@ -27,6 +30,9 @@ public class ConsumerService {
 	private final static String PASSWORD = "admin";
 	private final static String HOST = "localhost";
 	
+	@Autowired
+	private ProductRepository productRepository;
+	
 	public void listenerService () {
 	    try {
 	    	ConnectionFactory factory = new ConnectionFactory();
@@ -40,8 +46,11 @@ public class ConsumerService {
 		      @Override
 		      public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)
 		          throws IOException {
-		    	  Object o = Utilities.fromBytes(body);
-		         System.out.println(" [x] Received '" + body + "'");
+		    	  ProductDTO product = (ProductDTO)Utilities.fromBytes(body);
+		    	  System.out.println(" [x] Received '" + body + "'");
+		    	  productRepository.insertProduct(product.getName(), product.getLength(), product.getWidth(), product.getHeigth(), product.getWeight());
+		    	  
+		    	  
 		      }
 		    };
 		    channel.basicConsume(QUEUE_NAME, true, consumer);

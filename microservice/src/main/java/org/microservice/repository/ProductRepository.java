@@ -18,8 +18,8 @@ public interface ProductRepository  extends CrudRepository<Product, Long>{
 			@Param("heigthParam") float heigthParam,
 			@Param("weightParam") float weightParam);
 	
-	@Procedure(name = "getAllProducts")
-	List<Product> getAllProducts();
+	/*@Procedure(name = "getAllProducts")
+	List<Product> getAllProducts();*/
 	
 	
 }

@@ -21,32 +21,32 @@
 					<div class="form-group">
 						<div class="col-sm-9">
 							<input type="text"
-								placeholder="name" class="form-control" /> 
+								placeholder="name" name="name" class="form-control" /> 
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-sm-9">
 							<input type="number"
-								placeholder="length" class="form-control" /> 
+								placeholder="length" name="length" class="form-control" /> 
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-9">
-							<input type="text" placeholder="width"
+							<input type="text" name="width"  placeholder="width"
 								class="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-9">
 							<input type="text" 
-								placeholder="heigth" class="form-control" />
+								placeholder="heigth" name="heigth" class="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-9">
 							<input type="text" 
-								placeholder="weight" class="form-control" />
+								placeholder="weight" name="weight" class="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
