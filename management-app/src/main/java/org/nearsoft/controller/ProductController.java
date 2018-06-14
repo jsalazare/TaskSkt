@@ -2,10 +2,12 @@ package org.nearsoft.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.common.dto.ProductDTO;
 import org.common.model.Product;
 import org.nearsoft.service.ProducerService;
+import org.nearsoft.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,9 +25,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ProductController {
-	
+
 	@Autowired
 	private ProducerService producerService;
+	
+	private static List<ProductDTO> products;
+	
+	@Autowired
+	private ProductService productService;
 
 	@RequestMapping(value = { "/newProduct" }, method = RequestMethod.GET)
 	public ModelAndView newUser() {
@@ -43,20 +50,26 @@ public class ProductController {
 
 	@RequestMapping(value = { "/productList" }, method = RequestMethod.GET)
 	public ModelAndView userList() {
-		List<Product> myProducts = new ArrayList<Product>();
-		Product product = new Product();
-		product.setName("name1");
-		product.setLength(34);
-		product.setWidth(22);
-		product.setWeight(1.23);
-		product.setHeigth(23.12);
-		
-		myProducts.add(product); 
-		myProducts.add(product);
-		myProducts.add(product);
-		myProducts.add(product);
 
-		ModelAndView modelAndView = new ModelAndView("product/productList", "myProducts", myProducts);
+		try {
+			products = productService.requestAllProducts().get();
+			products.size();
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		 List<ProductDTO> products2 = new ArrayList<ProductDTO>();
+		
+		 products = new ArrayList<ProductDTO>();
+		 ProductDTO p = new ProductDTO();
+		 p.setName("cacaca");
+		 products.add(p);
+		ModelAndView modelAndView = new ModelAndView("product/productList", "myProducts", products);
 		return modelAndView;
 	}
 
@@ -66,13 +79,11 @@ public class ProductController {
 		return modelAndView;
 	}
 
-
-	
 	@RequestMapping("/sendMessage")
 	public void sendMessage() {
 		producerService.produceMessage("example text");
 	}
-	
+
 	@RequestMapping("/sendMessage2")
 	public void sendMessageObject(@RequestBody ProductDTO product) {
 		producerService.produceMessage(product);

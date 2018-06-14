@@ -17,7 +17,7 @@
 				<form autocomplete="off" action="/newProduct"
 					  method="post" class="form-horizontal"
 					role="form">
-					<h2>Add a User</h2>
+					<h2>Add a Product</h2>
 					<div class="form-group">
 						<div class="col-sm-9">
 							<input type="text"

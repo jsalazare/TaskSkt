@@ -1,4 +1,4 @@
-package org.nearsoft.service;
+package org.microservice.service;
 
 
 import com.rabbitmq.client.Connection;
@@ -17,7 +17,7 @@ public class ProducerService {
 	/**
      *  The name of the Queue
      */
-    private final static String QUEUE_NAME = "management-microservice";
+    private final static String QUEUE_NAME = "microservice-management";
     private final static String USERNAME = "admin";
     private final static String PASSWORD = "admin";
     private final static String HOST = "localhost";
@@ -54,15 +54,17 @@ public class ProducerService {
         try {
             channel.queueDeclare(QUEUE_NAME, true, false, false, null);
            
-            channel.basicPublish("", QUEUE_NAME, null, Utilities.getBytes(message));
+            channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
             
             System.out.println(" [x] Sent '" + message + "'");
           
             //channel.close();
             //connection.close();
         } catch (IOException io) {
+            System.out.println("IOException");
             io.printStackTrace();
-        }/* catch (TimeoutException toe) {
+        } /*catch (TimeoutException toe) {
+            System.out.println("TimeoutException : " + toe.getMessage());
             toe.printStackTrace();
         }*/
     }
@@ -73,7 +75,8 @@ public class ProducerService {
      */
     public void produceMessage(Object message) {
         try {
-        	
+            
+            
             channel.queueDeclare(QUEUE_NAME, true, false, false, null);
             
             channel.basicPublish("", QUEUE_NAME, null, Utilities.getBytes(message));
@@ -83,11 +86,9 @@ public class ProducerService {
             //channel.close();
             //connection.close();
         } catch (IOException io) {
+            System.out.println("IOException");
             io.printStackTrace();
-        } /*catch (TimeoutException toe) {
-            System.out.println("TimeoutException : " + toe.getMessage());
-            toe.printStackTrace();
-        }*/
+        } 
     }
     
 }

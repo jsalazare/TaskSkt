@@ -40,19 +40,19 @@ public class Product implements Serializable {
 
 	@Column(name = "length")
 	@NotEmpty(message = "*Please provide a length")
-	private String length;
+	private int length;
 
 	@Column(name = "width")
 	@NotEmpty(message = "*Please provide a width")
-	private String width;
+	private int width;
 
 	@Column(name = "heigth")
 	@NotEmpty(message = "*Please provide your a heigth")
-	private String heigth;
+	private float heigth;
 
 	@Column(name = "weight")
 	@NotEmpty(message = "*Please provide a weight")
-	private String weight;
+	private float weight;
 
 	public String getName() {
 		return name;
@@ -62,37 +62,43 @@ public class Product implements Serializable {
 		this.name = name;
 	}
 
-	public String getLength() {
+	public int getLength() {
 		return length;
 	}
 
-	public void setLength(String length) {
+	public void setLength(int length) {
 		this.length = length;
 	}
 
-	public String getWidth() {
+	public int getWidth() {
 		return width;
 	}
 
-	public void setWidth(String width) {
+	public void setWidth(int width) {
 		this.width = width;
 	}
 
-	public String getHeigth() {
+	public float getHeigth() {
 		return heigth;
 	}
 
-	public void setHeigth(String heigth) {
+	public void setHeigth(float heigth) {
 		this.heigth = heigth;
 	}
 
-	public String getWeight() {
+	public float getWeight() {
 		return weight;
 	}
 
-	public void setWeight(String weight) {
+	public void setWeight(float weight) {
 		this.weight = weight;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
 	
 
 }

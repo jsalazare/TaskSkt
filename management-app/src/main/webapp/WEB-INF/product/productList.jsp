@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.List"%>
-<%@ page import="org.common.model.Product"%>
+<%@ page import="org.common.dto.ProductDTO"%>
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -17,6 +18,20 @@
 <body>
 
 	<div class="container">
+
+		<p>dgdfgdfg</p>
+		<c:forEach items="${myProducts}" var="product">
+			asdasd
+			<p>${product.name}</p> 
+			<c:out value="${myProducts[0].getName()}" />
+			<p>${product.getName()}</p>
+		</c:forEach>
+
+		<c:forEach items="${myProducts}" var="product">
+			
+				<p>Employee ID: <c:out value="${product.name}" /></p>
+			
+		</c:forEach>
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<table class="table table-hover" style="border: 1px solid;">
@@ -28,12 +43,12 @@
 						<th scope="col">Weight</th>
 					</tr>
 					<%
-						List products = (ArrayList) request.getAttribute("myProducts");
+						List<ProductDTO> products = (List<ProductDTO>) request.getAttribute("myProducts");
 					%>
 
 					<%
 						for (int i = 0; i < products.size(); i++) {
-							Product pro = (Product) products.get(i);
+							ProductDTO pro = (ProductDTO) products.get(i);
 					%>
 					<!-- create an html table row -->
 					<tr>
@@ -69,8 +84,13 @@
 					<%
 						}
 					%>
+
+
 					<!-- close table -->
 				</table>
+
+
+
 			</div>
 		</div>
 	</div>

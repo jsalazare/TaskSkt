@@ -5,7 +5,6 @@ import java.util.concurrent.TimeoutException;
 
 import javax.annotation.PostConstruct;
 
-import org.common.util.Utilities;
 import org.springframework.stereotype.Service;
 
 import com.rabbitmq.client.AMQP;
@@ -18,34 +17,33 @@ import com.rabbitmq.client.Envelope;
 
 @Service
 public class ConsumerService {
-	
+
 	/**
-	 *  This configurations should come from common Library.
+	 * This configurations should come from common Library.
 	 */
-	private final static String QUEUE_NAME = "hello";
+	private final static String QUEUE_NAME = "microservice-management";
 	private final static String USERNAME = "admin";
 	private final static String PASSWORD = "admin";
 	private final static String HOST = "localhost";
-	
-	public void listenerService () {
-	    try {
-	    	ConnectionFactory factory = new ConnectionFactory();
-		    factory.setHost(HOST);
-		    factory.setUsername(USERNAME);
-		    factory.setPassword(PASSWORD);
-		    Connection connection = factory.newConnection();
-		    Channel channel = connection.createChannel();
-			channel.queueDeclare(QUEUE_NAME, true, false, false, null);
-		    Consumer consumer = new DefaultConsumer(channel) {
-		      @Override
-		      public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)
-		          throws IOException {
-		    	  Object o = Utilities.fromBytes(body);
-		         System.out.println(" [x] Received '" + body + "'");
-		      }
-		    };
-		    channel.basicConsume(QUEUE_NAME, true, consumer);
-		    
+
+	private String consumerTag;
+
+	private ConnectionFactory factory;
+
+	private Connection connection;
+	private Channel channel;
+
+	public ConsumerService() {
+		factory = new ConnectionFactory();
+
+		// Values should come from common library
+		factory.setHost(HOST);
+		factory.setUsername(USERNAME);
+		factory.setPassword(PASSWORD);
+
+		try {
+			connection = factory.newConnection();
+			channel = connection.createChannel();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,9 +51,57 @@ public class ConsumerService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    
+	}
+
+	// Permanent Listener
+	public void listenerService() {
+		try {
+
+			channel.queueDeclare(QUEUE_NAME, true, false, false, null);
+			Consumer consumer = new DefaultConsumer(channel) {
+				@Override
+				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
+						byte[] body) throws IOException {
+
+				}
+			};
+			channel.basicConsume(QUEUE_NAME, true, consumer);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void listenerService(Consumer consumer) {
+		try {
+
+			channel.queueDeclare(QUEUE_NAME, true, false, false, null);
+
+			consumerTag = channel.basicConsume(QUEUE_NAME, true, consumer);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void stopListening() {
+		try {
+			channel.basicCancel(consumerTag);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
+	
+
+	public Channel getChannel() {
+		return channel;
+	}
+
 	
 	@PostConstruct
 	public void postConstruct() {

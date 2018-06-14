@@ -1,12 +1,14 @@
 package org.microservice.service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 import javax.annotation.PostConstruct;
 
 import org.common.dto.ProductDTO;
 import org.common.util.Utilities;
+import org.microservice.dbmodel.Product;
 import org.microservice.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,40 +23,37 @@ import com.rabbitmq.client.Envelope;
 
 @Service
 public class ConsumerService {
-	
+
 	/**
-	 *  This configurations should come from common Library.
+	 * This configurations should come from common Library.
 	 */
 	private final static String QUEUE_NAME = "management-microservice";
 	private final static String USERNAME = "admin";
 	private final static String PASSWORD = "admin";
 	private final static String HOST = "localhost";
-	
+
 	@Autowired
 	private ProductRepository productRepository;
-	
-	public void listenerService () {
-	    try {
-	    	ConnectionFactory factory = new ConnectionFactory();
-		    factory.setHost(HOST);
-		    factory.setUsername(USERNAME);
-		    factory.setPassword(PASSWORD);
-		    Connection connection = factory.newConnection();
-		    Channel channel = connection.createChannel();
-			channel.queueDeclare(QUEUE_NAME, true, false, false, null);
-		    Consumer consumer = new DefaultConsumer(channel) {
-		      @Override
-		      public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)
-		          throws IOException {
-		    	  ProductDTO product = (ProductDTO)Utilities.fromBytes(body);
-		    	  System.out.println(" [x] Received '" + body + "'");
-		    	  productRepository.insertProduct(product.getName(), product.getLength(), product.getWidth(), product.getHeigth(), product.getWeight());
-		    	  
-		    	  
-		      }
-		    };
-		    channel.basicConsume(QUEUE_NAME, true, consumer);
-		    
+
+	@Autowired
+	private ProducerService producerService;
+
+	private ConnectionFactory factory;
+
+	private Connection connection;
+	private Channel channel;
+
+	public ConsumerService() {
+		factory = new ConnectionFactory();
+
+		// Values should come from common library
+		factory.setHost(HOST);
+		factory.setUsername(USERNAME);
+		factory.setPassword(PASSWORD);
+
+		try {
+			connection = factory.newConnection();
+			channel = connection.createChannel();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -62,10 +61,44 @@ public class ConsumerService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    
 	}
-	
-	
+
+	public void listenerService() {
+		try {
+
+			channel.queueDeclare(QUEUE_NAME, true, false, false, null);
+			Consumer consumer = new DefaultConsumer(channel) {
+				@Override
+				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
+						byte[] body) throws IOException {
+
+					Object message = Utilities.fromBytes(body);
+					if (message instanceof String) {
+						if (message.equals("getAllProducts")) {
+
+							List<ProductDTO> products = org.microservice.util.Utilities
+									.fromProductToProductDTO(productRepository.getAllProducts());
+							producerService.produceMessage(products);
+						}
+					} else if (message instanceof ProductDTO) {
+						ProductDTO product = (ProductDTO) Utilities.fromBytes(body);
+
+						System.out.println(" [x] Received '" + body + "'");
+						productRepository.insertProduct(product.getName(), product.getLength(), product.getWidth(),
+								product.getHeigth(), product.getWeight());
+					}
+
+				}
+			};
+			channel.basicConsume(QUEUE_NAME, true, consumer);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	@PostConstruct
 	public void postConstruct() {
 		listenerService();

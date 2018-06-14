@@ -3,6 +3,7 @@ package org.microservice.repository;
 import java.util.List;
 
 import org.microservice.dbmodel.Product;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -18,8 +19,7 @@ public interface ProductRepository  extends CrudRepository<Product, Long>{
 			@Param("heigthParam") float heigthParam,
 			@Param("weightParam") float weightParam);
 	
-	/*@Procedure(name = "getAllProducts")
-	List<Product> getAllProducts();*/
-	
+	@Query(value = "call get_all_products", nativeQuery = true)
+	List<Product> getAllProducts();
 	
 }
