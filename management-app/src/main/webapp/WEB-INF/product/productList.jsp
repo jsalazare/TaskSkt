@@ -18,20 +18,6 @@
 <body>
 
 	<div class="container">
-
-		<p>dgdfgdfg</p>
-		<c:forEach items="${myProducts}" var="product">
-			asdasd
-			<p>${product.name}</p> 
-			<c:out value="${myProducts[0].getName()}" />
-			<p>${product.getName()}</p>
-		</c:forEach>
-
-		<c:forEach items="${myProducts}" var="product">
-			
-				<p>Employee ID: <c:out value="${product.name}" /></p>
-			
-		</c:forEach>
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<table class="table table-hover" style="border: 1px solid;">
@@ -42,55 +28,21 @@
 						<th scope="col">Heigth</th>
 						<th scope="col">Weight</th>
 					</tr>
-					<%
-						List<ProductDTO> products = (List<ProductDTO>) request.getAttribute("myProducts");
-					%>
 
-					<%
-						for (int i = 0; i < products.size(); i++) {
-							ProductDTO pro = (ProductDTO) products.get(i);
-					%>
-					<!-- create an html table row -->
-					<tr>
-						<!-- create cells of row -->
-						<td>
-							<%
-								out.print(pro.getName());
-							%>
-						</td>
-						<td>
-							<%
-								out.print(pro.getLength());
-							%>
-						</td>
-						<td>
-							<%
-								out.print(pro.getWidth());
-							%>
-						</td>
-						<td>
-							<%
-								out.print(pro.getHeigth());
-							%>
-						</td>
-						<td>
-							<%
-								out.print(pro.getWeight());
-							%>
-						</td>
-						<!-- close row -->
-					</tr>
-					<!-- close the loop -->
-					<%
-						}
-					%>
-
-
+					<c:forEach items="${myProducts}" var="product">
+						<tr>
+							<td>${product.name}</td>
+							<td>${product.length}</td>
+							<td>${product.width}</td>
+							<td>${product.heigth}</td>
+							<td>${product.weight}</td>
+						</tr>
+					</c:forEach>
 					<!-- close table -->
 				</table>
-
-
-
+				<div id="browse_app">
+					<a class="btn btn-large btn-info" href="/newProduct">Add New Product</a>
+				</div>
 			</div>
 		</div>
 	</div>
