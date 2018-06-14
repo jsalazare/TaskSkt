@@ -30,8 +30,6 @@ public class ProducerService {
     
     public ProducerService () {
     	factory = new ConnectionFactory();
-    	
-    	//Values should come from common library
     	factory.setHost(HOST);
         factory.setUsername(USERNAME);
         factory.setPassword(PASSWORD);
@@ -59,15 +57,10 @@ public class ProducerService {
             
             System.out.println(" [x] Sent '" + message + "'");
           
-            //channel.close();
-            //connection.close();
         } catch (IOException io) {
             System.out.println("IOException");
             io.printStackTrace();
-        } /*catch (TimeoutException toe) {
-            System.out.println("TimeoutException : " + toe.getMessage());
-            toe.printStackTrace();
-        }*/
+        } 
     }
     
     /**
@@ -84,8 +77,6 @@ public class ProducerService {
             
             System.out.println(" [x] Sent '" + message + "'");
           
-            //channel.close();
-            //connection.close();
         } catch (IOException io) {
             System.out.println("IOException");
             io.printStackTrace();

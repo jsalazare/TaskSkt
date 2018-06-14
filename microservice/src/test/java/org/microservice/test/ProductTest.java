@@ -1,4 +1,4 @@
-package org.microservice;
+package org.microservice.test;
 
 
 import java.util.List;

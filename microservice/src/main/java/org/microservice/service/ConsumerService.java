@@ -64,8 +64,8 @@ public class ConsumerService {
 		}
 	}
 
-	public void listenerService() {
-		try {
+	public void listenerService() throws IOException {
+		
 
 			channel.queueDeclare(QUEUE_NAME, true, false, false, null);
 			Consumer consumer = new DefaultConsumer(channel) {
@@ -93,15 +93,12 @@ public class ConsumerService {
 			};
 			channel.basicConsume(QUEUE_NAME, true, consumer);
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 
 	}
 
 	@PostConstruct
-	public void postConstruct() {
+	public void postConstruct() throws IOException {
 		listenerService();
 	}
 }

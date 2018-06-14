@@ -4,9 +4,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Registration Form</title>
-<link rel="stylesheet" type="text/css"
-	th:href="@{/css/registration.css}" />
+<title>New Product Form</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
