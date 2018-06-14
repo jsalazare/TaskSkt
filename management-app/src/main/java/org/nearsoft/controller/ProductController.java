@@ -45,6 +45,7 @@ public class ProductController {
 		// Logic for saving element, maybe calling rabbit service here.
 		producerService.produceMessage(product);
 		productService.requestAllProducts();
+		Thread.sleep(2000);//sleep to thread just for waiting rabbit answer (not good practice)
 		return "redirect:newProduct";
 	}
 
@@ -54,17 +55,7 @@ public class ProductController {
 		List<ProductDTO> products = null;
 
 		productService.requestAllProducts();
-
-		// rLnew ist<ProductDTO> products2 = new ArrayList<ProductDTO>();
-
-		/*
-		 * products = new ArrayList<ProductDTO>(); ProductDTO p = new ProductDTO();
-		 * p.setName("hola"); products.add(p);
-		 */
 		
-		
-		
-	     //modelAndView.setViewName("product/productList");
 		model.addAttribute("myProducts",WebApplication.productList);
 	    
 		return "product/productList";
