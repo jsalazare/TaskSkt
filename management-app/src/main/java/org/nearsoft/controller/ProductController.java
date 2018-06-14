@@ -1,5 +1,6 @@
 package org.nearsoft.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -27,9 +28,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProductController {
 
 	@Autowired
-	private ProducerService producerService;
-
-	@Autowired
 	private ProductService productService;
 
 	@RequestMapping(value = { "/newProduct" }, method = RequestMethod.GET)
@@ -41,19 +39,17 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = { "/newProduct" }, method = RequestMethod.POST)
-	public String newUserSave(ProductDTO product) throws InterruptedException, ExecutionException {
+	public String newUserSave(ProductDTO product) throws InterruptedException, ExecutionException, IOException {
 		// Logic for saving element, maybe calling rabbit service here.
-		producerService.produceMessage(product);
+		productService.insertProduct(product);
 		productService.requestAllProducts();
 		Thread.sleep(2000);//sleep to thread just for waiting rabbit answer (not good practice)
 		return "redirect:newProduct";
 	}
 
 	@RequestMapping(value = { "/productList" }, method = RequestMethod.GET)
-	public String productList(Model model) throws InterruptedException, ExecutionException {
+	public String productList(Model model) throws InterruptedException, ExecutionException, IOException {
 		
-		List<ProductDTO> products = null;
-
 		productService.requestAllProducts();
 		
 		model.addAttribute("myProducts",WebApplication.productList);

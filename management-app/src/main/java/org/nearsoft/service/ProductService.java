@@ -28,12 +28,12 @@ public class ProductService {
 	@Autowired
 	private ProducerService producerService;
 
-	private volatile List<ProductDTO> products;
+	//private volatile List<ProductDTO> products;
 
 	@Autowired
 	private ConsumerService consumerService;
 
-	public void requestAllProducts() throws InterruptedException, ExecutionException {
+	public void requestAllProducts() throws InterruptedException, ExecutionException, IOException {
 		producerService.produceMessage(new String("getAllProducts"));
 		
 		consumerService.listenerService(new DefaultConsumer(consumerService.getChannel()) {
@@ -44,6 +44,10 @@ public class ProductService {
 				WebApplication.productList = (List<ProductDTO>) Utilities.fromBytes(body);
 			}
 		});
+	}
+	
+	public void insertProduct(ProductDTO product) throws IOException {
+		producerService.produceMessage(product);
 	}
 
 	/*

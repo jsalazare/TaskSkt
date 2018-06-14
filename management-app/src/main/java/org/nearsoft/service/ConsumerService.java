@@ -22,8 +22,7 @@ public class ConsumerService {
 	/**
 	 * This configurations should come from common Library.
 	 */
-	
-	
+
 	private String QUEUE_NAME = Configurations.rabbitQueueMicroserviceToManagement;
 	private String USERNAME = Configurations.rabbitUsername;
 	private String PASSWORD = Configurations.rabbitPassword;
@@ -76,36 +75,24 @@ public class ConsumerService {
 		}
 	}
 
-	public void listenerService(Consumer consumer) {
-		try {
+	public void listenerService(Consumer consumer) throws IOException {
 
-			channel.queueDeclare(QUEUE_NAME, true, false, false, null);
+		channel.queueDeclare(QUEUE_NAME, true, false, false, null);
 
-			consumerTag = channel.basicConsume(QUEUE_NAME, true, consumer);
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public void stopListening() {
-		try {
-			channel.basicCancel(consumerTag);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		consumerTag = channel.basicConsume(QUEUE_NAME, true, consumer);
 
 	}
-	
-	
+
+	public void stopListening() throws IOException {
+
+		channel.basicCancel(consumerTag);
+
+	}
 
 	public Channel getChannel() {
 		return channel;
 	}
 
-	
 	@PostConstruct
 	public void postConstruct() {
 		listenerService();
