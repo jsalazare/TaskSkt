@@ -13,6 +13,7 @@ public static List<ProductDTO> fromProductToProductDTO(List<Product> products) {
 		
 		products.forEach(e -> {
 			ProductDTO p = new ProductDTO();
+			p.setId(e.getId());
 			p.setName(e.getName());
 			p.setLength(e.getLength());
 			p.setWidth(e.getWidth());

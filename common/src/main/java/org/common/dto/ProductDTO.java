@@ -8,12 +8,22 @@ public class ProductDTO implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 7544567975802613970L;
+	
+	private long id;
 	private String name;
 	private int length;
 	private int width;
 	private float heigth;
 	private float weight;
 	
+	
+	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}

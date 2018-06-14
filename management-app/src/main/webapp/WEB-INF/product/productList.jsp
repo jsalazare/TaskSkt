@@ -22,6 +22,8 @@
 			<div class="col-md-8 col-md-offset-2">
 				<table class="table table-hover" style="border: 1px solid;">
 					<tr>
+					
+						<th scope="col">Id</th>
 						<th scope="col">Name</th>
 						<th scope="col">Length</th>
 						<th scope="col">Width</th>
@@ -31,6 +33,7 @@
 
 					<c:forEach items="${myProducts}" var="product">
 						<tr>
+							<td>${product.id}</td>
 							<td>${product.name}</td>
 							<td>${product.length}</td>
 							<td>${product.width}</td>

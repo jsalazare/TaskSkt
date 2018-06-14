@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedStoredProcedureQueries;
 import javax.persistence.NamedStoredProcedureQuery;
@@ -33,7 +35,12 @@ public class Product implements Serializable {
 	 */
 	private static final long serialVersionUID = -108097060161639783L;
 
+	
 	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
+	
 	@Column(name = "name")
 	@NotEmpty(message = "*Please provide your name")
 	private String name;
@@ -53,6 +60,16 @@ public class Product implements Serializable {
 	@Column(name = "weight")
 	@NotEmpty(message = "*Please provide a weight")
 	private float weight;
+
+	
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
