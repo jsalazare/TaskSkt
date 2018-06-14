@@ -6,6 +6,7 @@ import java.util.concurrent.TimeoutException;
 
 import javax.annotation.PostConstruct;
 
+import org.common.configuration.Configurations;
 import org.common.dto.ProductDTO;
 import org.common.util.Utilities;
 import org.microservice.dbmodel.Product;
@@ -27,10 +28,10 @@ public class ConsumerService {
 	/**
 	 * This configurations should come from common Library.
 	 */
-	private final static String QUEUE_NAME = "management-microservice";
-	private final static String USERNAME = "admin";
-	private final static String PASSWORD = "admin";
-	private final static String HOST = "localhost";
+	private String QUEUE_NAME = Configurations.rabbitQueueManagementToMicroservice;
+	private String USERNAME = Configurations.rabbitUsername;
+	private String PASSWORD = Configurations.rabbitPassword;
+	private String HOST = Configurations.rabbitHost;
 
 	@Autowired
 	private ProductRepository productRepository;

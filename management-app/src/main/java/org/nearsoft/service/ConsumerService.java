@@ -5,6 +5,7 @@ import java.util.concurrent.TimeoutException;
 
 import javax.annotation.PostConstruct;
 
+import org.common.configuration.Configurations;
 import org.springframework.stereotype.Service;
 
 import com.rabbitmq.client.AMQP;
@@ -21,10 +22,12 @@ public class ConsumerService {
 	/**
 	 * This configurations should come from common Library.
 	 */
-	private final static String QUEUE_NAME = "microservice-management";
-	private final static String USERNAME = "admin";
-	private final static String PASSWORD = "admin";
-	private final static String HOST = "localhost";
+	
+	
+	private String QUEUE_NAME = Configurations.rabbitQueueMicroserviceToManagement;
+	private String USERNAME = Configurations.rabbitUsername;
+	private String PASSWORD = Configurations.rabbitPassword;
+	private String HOST = Configurations.rabbitHost;
 
 	private String consumerTag;
 
