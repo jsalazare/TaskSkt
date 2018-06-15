@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 
 //add general paths
 
+@RequestMapping("product/")
 @Controller
 public class ProductController {
 

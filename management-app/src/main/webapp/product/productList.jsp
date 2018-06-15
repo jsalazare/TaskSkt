@@ -3,9 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="java.util.List"%>
-<%@ page import="org.common.dto.ProductDTO"%>
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -44,7 +41,7 @@
 					<!-- close table -->
 				</table>
 				<div id="browse_app">
-					<a class="btn btn-large btn-info" href="/newProduct">Add New Product</a>
+					<a class="btn btn-large btn-info" href="newProduct">Add New Product</a>
 				</div>
 			</div>
 		</div>

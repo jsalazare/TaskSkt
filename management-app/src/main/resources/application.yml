@@ -4,7 +4,7 @@ server:
 spring:
   mvc:
     view:
-      prefix: WEB-INF/
+      prefix: /
       suffix: .jsp
       
 rabbit:

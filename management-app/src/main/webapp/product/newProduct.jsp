@@ -20,7 +20,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<form autocomplete="off" action="/newProduct" onsubmit="return validate()" method="post"
+				<form autocomplete="off" action="newProduct" onsubmit="return validate()" method="post"
 					class="form-horizontal" role="form">
 					<h2>Add a Product</h2>
 					<div class="form-group"  >
@@ -62,7 +62,7 @@
 				</form>
 
 				<div id="browse_app">
-					<a class="btn btn-large btn-info" href="/productList">Product List</a>
+					<a class="btn btn-large btn-info" href="productList">Product List</a>
 				</div>
 
 			</div>
