@@ -17,7 +17,7 @@ public static List<ProductDTO> fromProductToProductDTO(List<Product> products) {
 			p.setName(e.getName());
 			p.setLength(e.getLength());
 			p.setWidth(e.getWidth());
-			p.setHeigth(e.getHeigth());
+			p.setHeight(e.getHeight());
 			p.setWeight(e.getWeight());
 			list.add(p);
 		});

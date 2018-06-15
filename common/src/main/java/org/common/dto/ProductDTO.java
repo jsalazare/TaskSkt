@@ -13,7 +13,7 @@ public class ProductDTO implements Serializable{
 	private String name;
 	private int length;
 	private int width;
-	private float heigth;
+	private float height;
 	private float weight;
 	
 	
@@ -42,11 +42,11 @@ public class ProductDTO implements Serializable{
 	public void setWidth(int width) {
 		this.width = width;
 	}
-	public float getHeigth() {
-		return heigth;
+	public float getHeight() {
+		return height;
 	}
-	public void setHeigth(float heigth) {
-		this.heigth = heigth;
+	public void setHeight(float height) {
+		this.height = height;
 	}
 	public float getWeight() {
 		return weight;

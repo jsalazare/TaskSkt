@@ -24,7 +24,7 @@
 						<th scope="col">Name</th>
 						<th scope="col">Length</th>
 						<th scope="col">Width</th>
-						<th scope="col">Heigth</th>
+						<th scope="col">Height</th>
 						<th scope="col">Weight</th>
 					</tr>
 
@@ -34,7 +34,7 @@
 							<td>${product.name}</td>
 							<td>${product.length}</td>
 							<td>${product.width}</td>
-							<td>${product.heigth}</td>
+							<td>${product.height}</td>
 							<td>${product.weight}</td>
 						</tr>
 					</c:forEach>

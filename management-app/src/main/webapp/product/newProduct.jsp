@@ -44,7 +44,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-9">
-							<input type="text" placeholder="heigth" id="heigth" name="heigth"
+							<input type="text" placeholder="height" id="height" name="height"
 								class="form-control" />
 						</div>
 					</div>

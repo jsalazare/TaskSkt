@@ -33,7 +33,8 @@ public class ProductService {
 
 	@PostConstruct
 	private void init() throws InterruptedException, ExecutionException, IOException {
-		requestAllProducts();
+		//requestAllProducts();
+		producerService.produceMessage("testMessage");
         requestAllProducts();
 	}
 

@@ -5,7 +5,7 @@ function validate() {
     var name = document.getElementById("name");
     var length = document.getElementById("length");
     var width = document.getElementById("width");
-    var heigth = document.getElementById("heigth");
+    var heigth = document.getElementById("height");
     var weight = document.getElementById("weight");
 
     var valid = true;

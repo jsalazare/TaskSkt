@@ -36,7 +36,7 @@ public class ConsumerService {
 	private Channel channel;
 
 	@Autowired
-	public ConsumerService(ProductRepository productRepository, ProducerService producerService, Configurations configurations) {
+	public ConsumerService(ProductRepository productRepository, ProducerService producerService, Configurations configurations) throws IOException, TimeoutException {
 		this.configurations = configurations;
 		this.producerService = producerService;
 		this.productRepository = productRepository;
@@ -48,16 +48,10 @@ public class ConsumerService {
 		factory.setUsername(configurations.getUsername());
 		factory.setPassword(configurations.getPassword());
 
-		try {
-			connection = factory.newConnection();
-			channel = connection.createChannel();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TimeoutException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		connection = factory.newConnection();
+		channel = connection.createChannel();
+
 	}
 
 	public void listenerService() throws IOException {
@@ -82,7 +76,7 @@ public class ConsumerService {
 
 						System.out.println(" [x] Received '" + body + "'");
 						productRepository.insertProduct(product.getName(), product.getLength(), product.getWidth(),
-								product.getHeigth(), product.getWeight());
+								product.getHeight(), product.getWeight());
 					}
 
 				}

@@ -29,8 +29,12 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class ProductController {
 
-	@Autowired
 	private ProductService productService;
+
+    @Autowired
+    public ProductController (ProductService productService){
+        this.productService = productService;
+    }
 
 	@RequestMapping(value = { "/newProduct" }, method = RequestMethod.GET)
 	public ModelAndView newUser() {
@@ -44,16 +48,15 @@ public class ProductController {
 	public String newUserSave(ProductDTO product) throws InterruptedException, ExecutionException, IOException {
 
 		productService.insertProduct(product);
-		productService.requestAllProducts();
-		Thread.sleep(2000);//sleep to thread just for waiting rabbit answer (not good practice)
+
 		return "redirect:newProduct";
 	}
 
 	@RequestMapping(value = { "/productList" }, method = RequestMethod.GET)
 	public String productList(Model model) throws InterruptedException, ExecutionException, IOException {
-		
+
 		productService.requestAllProducts();
-		
+        Thread.sleep(2000);
 		model.addAttribute("myProducts", productService.getProductList());
 	    
 		return "product/productList";

@@ -57,7 +57,7 @@ public class Product implements Serializable {
 
 	@Column(name = "heigth")
 	@NotEmpty(message = "*Please provide your a heigth")
-	private float heigth;
+	private float height;
 
 	@Column(name = "weight")
 	@NotEmpty(message = "*Please provide a weight")
@@ -97,12 +97,12 @@ public class Product implements Serializable {
 		this.width = width;
 	}
 
-	public float getHeigth() {
-		return heigth;
+	public float getHeight() {
+		return height;
 	}
 
-	public void setHeigth(float heigth) {
-		this.heigth = heigth;
+	public void setHeight(float height) {
+		this.height = height;
 	}
 
 	public float getWeight() {

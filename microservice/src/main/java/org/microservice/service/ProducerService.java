@@ -22,60 +22,47 @@ public class ProducerService {
     private Channel channel;
 
     @Autowired
-    public ProducerService (Configurations configurations) {
+    public ProducerService (Configurations configurations) throws IOException, TimeoutException {
         this.configurations = configurations;
     	factory = new ConnectionFactory();
     	factory.setHost(configurations.getHost());
         factory.setUsername(configurations.getUsername());
         factory.setPassword(configurations.getPassword());
-        
-        try {
-        	connection = factory.newConnection();
-			channel = connection.createChannel();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TimeoutException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+        connection = factory.newConnection();
+        channel = connection.createChannel();
+
     }
     /**
      *  This method publishes a message
      * @param message
      */
-    public void produceMessage(String message) {
-        try {
-            channel.queueDeclare(configurations.getQueueManagnent(), true, false, false, null);
-           
-            channel.basicPublish("", configurations.getQueueManagnent(), null, message.getBytes());
-            
-            System.out.println(" [x] Sent '" + message + "'");
+    public void produceMessage(String message) throws IOException {
+
+        channel.queueDeclare(configurations.getQueueManagnent(), true, false, false, null);
+
+        channel.basicPublish("", configurations.getQueueManagnent(), null, message.getBytes());
+
+        System.out.println(" [x] Sent '" + message + "'");
           
-        } catch (IOException io) {
-            System.out.println("IOException");
-            io.printStackTrace();
-        } 
+
     }
     
     /**
      *  This method publishes a message
      * @param message
      */
-    public void produceMessage(Object message) {
-        try {
+    public void produceMessage(Object message) throws IOException {
+
             
             
-            channel.queueDeclare(configurations.getQueueManagnent(), true, false, false, null);
-            
-            channel.basicPublish("", configurations.getQueueManagnent(), null, Utilities.getBytes(message));
-            
-            System.out.println(" [x] Sent '" + message + "'");
+        channel.queueDeclare(configurations.getQueueManagnent(), true, false, false, null);
+
+        channel.basicPublish("", configurations.getQueueManagnent(), null, Utilities.getBytes(message));
+
+        System.out.println(" [x] Sent '" + message + "'");
           
-        } catch (IOException io) {
-            System.out.println("IOException");
-            io.printStackTrace();
-        } 
+
     }
     
 }
