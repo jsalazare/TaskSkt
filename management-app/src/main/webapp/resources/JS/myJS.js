@@ -1,20 +1,21 @@
 /**
- * Created by jsalazar on 6/14/18.
+ * Created by jsalaza   r on 6/14/18.
  */
-function validate()
-{
-    var a = document.getElementById("name");
+function validate() {
+    var name = document.getElementById("name");
+    var length = document.getElementById("length");
+    var width = document.getElementById("width");
+    var heigth = document.getElementById("heigth");
+    var weight = document.getElementById("weight");
+
     var valid = true;
-    if(a.value.length<=0)
-    {
-        alert("Don't leave the field empty!");
+    if(hasInvalidaLength(name) || hasInvalidaLength(length) || hasInvalidaLength(width) || hasInvalidaLength(heigth) || hasInvalidaLength(weight)) {
+        alert("Don't leave the fields empty!");
         valid = false;
-    }
-    else{
-        if(isNaN(c)){
-            alert("Enter a number");
-            valid = false;
-        }
     }
     return valid;
 };
+
+function hasInvalidaLength(elem) {
+    return elem.value.length <= 0;
+}

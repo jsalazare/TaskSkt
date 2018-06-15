@@ -50,7 +50,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-9">
-							<input type="text" placeholder="weight"id="weight"  name="weight"
+							<input type="text" placeholder="weight" id="weight"  name="weight"
 								class="form-control" />
 						</div>
 					</div>
