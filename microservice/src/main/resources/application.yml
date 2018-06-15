@@ -12,6 +12,13 @@ spring:
     ddl-auto: update
     naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
     dialect: org.hibernate.dialect.MySQL5Dialect
+    
+rabbit:
+  username: admin
+  password: admin
+  host: localhost
+  queueManagnent: microservice-management
+  queueMicroservice: management-microservice
 
 
 #server.port = 9090

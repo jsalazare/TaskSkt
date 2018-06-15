@@ -9,31 +9,27 @@ import java.util.concurrent.TimeoutException;
 
 import org.common.configuration.Configurations;
 import org.common.util.Utilities;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProducerService {
 
-	/**
-	 * The name of the Queue
-	 */
-	private String QUEUE_NAME = Configurations.rabbitQueueManagementToMicroservice;
-	private String USERNAME = Configurations.rabbitUsername;
-	private String PASSWORD = Configurations.rabbitPassword;
-	private String HOST = Configurations.rabbitHost;
+	@Autowired
+	private Configurations configurations;
 
 	private ConnectionFactory factory;
 
 	private Connection connection;
 	private Channel channel;
 
-	public ProducerService() {
+	@Autowired
+	public ProducerService(Configurations configurations) {
+		this.configurations = configurations;
 		factory = new ConnectionFactory();
-
-		// Values should come from common library
-		factory.setHost(HOST);
-		factory.setUsername(USERNAME);
-		factory.setPassword(PASSWORD);
+    	factory.setHost(configurations.getHost());
+        factory.setUsername(configurations.getUsername());
+        factory.setPassword(configurations.getPassword());
 
 		try {
 			connection = factory.newConnection();
@@ -55,9 +51,9 @@ public class ProducerService {
 	 */
 	public void produceMessage(String message) throws IOException {
 
-		channel.queueDeclare(QUEUE_NAME, true, false, false, null);
+		channel.queueDeclare(configurations.getQueueMicroservice(), true, false, false, null);
 
-		channel.basicPublish("", QUEUE_NAME, null, Utilities.getBytes(message));
+		channel.basicPublish("", configurations.getQueueMicroservice(), null, Utilities.getBytes(message));
 
 		System.out.println(" [x] Sent '" + message + "'");
 
@@ -71,9 +67,9 @@ public class ProducerService {
 	 */
 	public void produceMessage(Object message) throws IOException {
 
-		channel.queueDeclare(QUEUE_NAME, true, false, false, null);
+		channel.queueDeclare(configurations.getQueueMicroservice(), true, false, false, null);
 
-		channel.basicPublish("", QUEUE_NAME, null, Utilities.getBytes(message));
+		channel.basicPublish("", configurations.getQueueMicroservice(), null, Utilities.getBytes(message));
 
 		System.out.println(" [x] Sent '" + message + "'");
 

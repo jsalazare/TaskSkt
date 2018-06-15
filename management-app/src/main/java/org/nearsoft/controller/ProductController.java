@@ -1,20 +1,21 @@
 package org.nearsoft.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.common.dto.ProductDTO;
 import org.nearsoft.WebApplication;
-import org.nearsoft.service.ProducerService;
 import org.nearsoft.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletResponse;
 
 /*
  * 
@@ -40,7 +41,7 @@ public class ProductController {
 
 	@RequestMapping(value = { "/newProduct" }, method = RequestMethod.POST)
 	public String newUserSave(ProductDTO product) throws InterruptedException, ExecutionException, IOException {
-		// Logic for saving element, maybe calling rabbit service here.
+
 		productService.insertProduct(product);
 		productService.requestAllProducts();
 		Thread.sleep(2000);//sleep to thread just for waiting rabbit answer (not good practice)
@@ -52,7 +53,7 @@ public class ProductController {
 		
 		productService.requestAllProducts();
 		
-		model.addAttribute("myProducts",WebApplication.productList);
+		model.addAttribute("myProducts", productService.getProductList());
 	    
 		return "product/productList";
 	}
@@ -60,6 +61,15 @@ public class ProductController {
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public ModelAndView index() {
 		ModelAndView modelAndView = new ModelAndView("index");
+		return modelAndView;
+	}
+
+	@ExceptionHandler
+	public ModelAndView handleIllegalArgumentException(IllegalArgumentException e, HttpServletResponse response)
+			throws IOException {
+		e.printStackTrace();
+		ModelAndView modelAndView = new ModelAndView("error");
+		modelAndView.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
 		return modelAndView;
 	}
 

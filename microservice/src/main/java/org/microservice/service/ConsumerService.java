@@ -12,6 +12,7 @@ import org.common.util.Utilities;
 import org.microservice.dbmodel.Product;
 import org.microservice.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
 import com.rabbitmq.client.AMQP;
@@ -25,18 +26,8 @@ import com.rabbitmq.client.Envelope;
 @Service
 public class ConsumerService {
 
-	/**
-	 * This configurations should come from common Library.
-	 */
-	private String QUEUE_NAME = Configurations.rabbitQueueManagementToMicroservice;
-	private String USERNAME = Configurations.rabbitUsername;
-	private String PASSWORD = Configurations.rabbitPassword;
-	private String HOST = Configurations.rabbitHost;
-
-	@Autowired
+	private Configurations configurations;
 	private ProductRepository productRepository;
-
-	@Autowired
 	private ProducerService producerService;
 
 	private ConnectionFactory factory;
@@ -44,13 +35,18 @@ public class ConsumerService {
 	private Connection connection;
 	private Channel channel;
 
-	public ConsumerService() {
+	@Autowired
+	public ConsumerService(ProductRepository productRepository, ProducerService producerService, Configurations configurations) {
+		this.configurations = configurations;
+		this.producerService = producerService;
+		this.productRepository = productRepository;
+
 		factory = new ConnectionFactory();
 
 		// Values should come from common library
-		factory.setHost(HOST);
-		factory.setUsername(USERNAME);
-		factory.setPassword(PASSWORD);
+		factory.setHost(configurations.getHost());
+		factory.setUsername(configurations.getUsername());
+		factory.setPassword(configurations.getPassword());
 
 		try {
 			connection = factory.newConnection();
@@ -67,7 +63,7 @@ public class ConsumerService {
 	public void listenerService() throws IOException {
 		
 
-			channel.queueDeclare(QUEUE_NAME, true, false, false, null);
+			channel.queueDeclare(configurations.getQueueMicroservice(), true, false, false, null);
 			Consumer consumer = new DefaultConsumer(channel) {
 				@Override
 				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
@@ -91,7 +87,7 @@ public class ConsumerService {
 
 				}
 			};
-			channel.basicConsume(QUEUE_NAME, true, consumer);
+			channel.basicConsume(configurations.getQueueMicroservice(), true, consumer);
 
 		
 

@@ -10,29 +10,24 @@ import java.util.concurrent.TimeoutException;
 
 import org.common.configuration.Configurations;
 import org.common.util.Utilities;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProducerService {
 
-	/**
-     *  The name of the Queue
-     */
-	private String QUEUE_NAME = Configurations.rabbitQueueMicroserviceToManagement;
-    private String USERNAME = Configurations.rabbitUsername;
-	private String PASSWORD = Configurations.rabbitPassword;
-	private String HOST = Configurations.rabbitHost;
-    
+	private Configurations configurations;
     private ConnectionFactory factory;
-    
     private Connection connection;
     private Channel channel;
-    
-    public ProducerService () {
+
+    @Autowired
+    public ProducerService (Configurations configurations) {
+        this.configurations = configurations;
     	factory = new ConnectionFactory();
-    	factory.setHost(HOST);
-        factory.setUsername(USERNAME);
-        factory.setPassword(PASSWORD);
+    	factory.setHost(configurations.getHost());
+        factory.setUsername(configurations.getUsername());
+        factory.setPassword(configurations.getPassword());
         
         try {
         	connection = factory.newConnection();
@@ -51,9 +46,9 @@ public class ProducerService {
      */
     public void produceMessage(String message) {
         try {
-            channel.queueDeclare(QUEUE_NAME, true, false, false, null);
+            channel.queueDeclare(configurations.getQueueManagnent(), true, false, false, null);
            
-            channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
+            channel.basicPublish("", configurations.getQueueManagnent(), null, message.getBytes());
             
             System.out.println(" [x] Sent '" + message + "'");
           
@@ -71,9 +66,9 @@ public class ProducerService {
         try {
             
             
-            channel.queueDeclare(QUEUE_NAME, true, false, false, null);
+            channel.queueDeclare(configurations.getQueueManagnent(), true, false, false, null);
             
-            channel.basicPublish("", QUEUE_NAME, null, Utilities.getBytes(message));
+            channel.basicPublish("", configurations.getQueueManagnent(), null, Utilities.getBytes(message));
             
             System.out.println(" [x] Sent '" + message + "'");
           

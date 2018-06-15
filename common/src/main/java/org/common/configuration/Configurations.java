@@ -1,17 +1,45 @@
 package org.common.configuration;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-
-
 public class Configurations {
 	
+	private String username;
+	private String password;
+	private String host;
+	private String queueManagnent;
+	private String queueMicroservice;
+	
+	
 
-	public static final String rabbitUsername = "admin";
-	public static final String rabbitPassword = "admin";
-	public static final String rabbitHost = "localhost";
-	public static final String rabbitQueueMicroserviceToManagement = "microservice-management";
-	public static final String rabbitQueueManagementToMicroservice = "management-microservice";
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getHost() {
+		return host;
+	}
+	public void setHost(String host) {
+		this.host = host;
+	}
+	public String getQueueManagnent() {
+		return queueManagnent;
+	}
+	public void setQueueManagnent(String queueManagnent) {
+		this.queueManagnent = queueManagnent;
+	}
+	public String getQueueMicroservice() {
+		return queueMicroservice;
+	}
+	public void setQueueMicroservice(String queueMicroservice) {
+		this.queueMicroservice = queueMicroservice;
+	}
 
 	
 	

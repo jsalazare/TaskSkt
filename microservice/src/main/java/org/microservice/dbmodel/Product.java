@@ -1,5 +1,7 @@
 package org.microservice.dbmodel;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -13,7 +15,7 @@ import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 
-import org.hibernate.validator.constraints.NotEmpty;
+
 
 @Entity
 @Table(name = "Product")
