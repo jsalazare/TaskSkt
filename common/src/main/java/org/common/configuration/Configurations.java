@@ -1,46 +1,66 @@
 package org.common.configuration;
 
-public class Configurations {
-	
-	private String username;
-	private String password;
-	private String host;
-	private String queueManagnent;
-	private String queueMicroservice;
-	
-	
+import org.common.interfaces.IConfigurations;
 
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getHost() {
-		return host;
-	}
-	public void setHost(String host) {
-		this.host = host;
-	}
-	public String getQueueManagnent() {
-		return queueManagnent;
-	}
-	public void setQueueManagnent(String queueManagnent) {
-		this.queueManagnent = queueManagnent;
-	}
-	public String getQueueMicroservice() {
-		return queueMicroservice;
-	}
-	public void setQueueMicroservice(String queueMicroservice) {
-		this.queueMicroservice = queueMicroservice;
-	}
+public class Configurations implements IConfigurations {
 
-	
-	
+    private String username;
+    private String password;
+    private String host;
+    private String queueManagnent;
+    private String queueMicroservice;
+
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+
+    @Override
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String getHost() {
+        return host;
+    }
+
+    @Override
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    @Override
+    public String getQueueManagnent() {
+        return queueManagnent;
+    }
+
+    @Override
+    public void setQueueManagnent(String queueManagnent) {
+        this.queueManagnent = queueManagnent;
+    }
+
+    @Override
+    public String getQueueMicroservice() {
+        return queueMicroservice;
+    }
+
+    @Override
+    public void setQueueMicroservice(String queueMicroservice) {
+        this.queueMicroservice = queueMicroservice;
+    }
+
+
 }

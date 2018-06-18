@@ -8,11 +8,13 @@ import javax.annotation.PostConstruct;
 
 import org.common.configuration.Configurations;
 import org.common.dto.ProductDTO;
-import org.common.util.Utilities;
-import org.microservice.dbmodel.Product;
+import org.common.interfaces.IConfigurations;
+import org.common.util.SerializationUtilities;
+import org.microservice.interfaces.IConsumerService;
+import org.microservice.interfaces.IProducerService;
 import org.microservice.repository.ProductRepository;
+import org.microservice.util.ProductUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
 import com.rabbitmq.client.AMQP;
@@ -24,38 +26,28 @@ import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 
 @Service
-public class ConsumerService {
+public class ConsumerService implements IConsumerService {
 
-	private Configurations configurations;
+	private IConfigurations configurations;
 	private ProductRepository productRepository;
-	private ProducerService producerService;
+	private IProducerService producerService;
 
-	private ConnectionFactory factory;
-
-	private Connection connection;
 	private Channel channel;
 
 	@Autowired
-	public ConsumerService(ProductRepository productRepository, ProducerService producerService, Configurations configurations) throws IOException, TimeoutException {
+	public ConsumerService(ProductRepository productRepository, IProducerService producerService, IConfigurations configurations) throws IOException, TimeoutException {
 		this.configurations = configurations;
 		this.producerService = producerService;
 		this.productRepository = productRepository;
-
-		factory = new ConnectionFactory();
-
-		// Values should come from common library
+		ConnectionFactory factory = new ConnectionFactory();
 		factory.setHost(configurations.getHost());
 		factory.setUsername(configurations.getUsername());
 		factory.setPassword(configurations.getPassword());
-
-
-		connection = factory.newConnection();
-		channel = connection.createChannel();
-
+		channel = factory.newConnection().createChannel();
 	}
 
+	@Override
 	public void listenerService() throws IOException {
-		
 
 			channel.queueDeclare(configurations.getQueueMicroservice(), true, false, false, null);
 			Consumer consumer = new DefaultConsumer(channel) {
@@ -63,16 +55,16 @@ public class ConsumerService {
 				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
 						byte[] body) throws IOException {
 
-					Object message = Utilities.fromBytes(body);
+					Object message = SerializationUtilities.fromBytes(body);
 					if (message instanceof String) {
 						if (message.equals("getAllProducts")) {
 
-							List<ProductDTO> products = org.microservice.util.Utilities
+							List<ProductDTO> products = ProductUtilities
 									.fromProductToProductDTO(productRepository.getAllProducts());
 							producerService.produceMessage(products);
 						}
 					} else if (message instanceof ProductDTO) {
-						ProductDTO product = (ProductDTO) Utilities.fromBytes(body);
+						ProductDTO product = (ProductDTO) SerializationUtilities.fromBytes(body);
 
 						System.out.println(" [x] Received '" + body + "'");
 						productRepository.insertProduct(product.getName(), product.getLength(), product.getWidth(),
@@ -82,13 +74,10 @@ public class ConsumerService {
 				}
 			};
 			channel.basicConsume(configurations.getQueueMicroservice(), true, consumer);
-
-		
-
 	}
 
 	@PostConstruct
-	public void postConstruct() throws IOException {
+	private void postConstruct() throws IOException {
 		listenerService();
 	}
 }

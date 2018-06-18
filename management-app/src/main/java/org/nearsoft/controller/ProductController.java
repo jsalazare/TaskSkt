@@ -1,11 +1,8 @@
 package org.nearsoft.controller;
 
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-
 import org.common.dto.ProductDTO;
-import org.nearsoft.WebApplication;
-import org.nearsoft.service.ProductService;
+import org.nearsoft.interfaces.IProductController;
+import org.nearsoft.interfaces.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -16,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 /*
  * 
@@ -27,54 +26,54 @@ import javax.servlet.http.HttpServletResponse;
 
 @RequestMapping("product/")
 @Controller
-public class ProductController {
+public class ProductController implements IProductController{
 
-	private ProductService productService;
+
+    private IProductService productService;
 
     @Autowired
-    public ProductController (ProductService productService){
+    public ProductController(IProductService productService) {
         this.productService = productService;
     }
 
-	@RequestMapping(value = { "/newProduct" }, method = RequestMethod.GET)
-	public ModelAndView newUser() {
-		ProductDTO product = new ProductDTO();
+    @Override
+    @RequestMapping(value = {"/newProduct"}, method = RequestMethod.GET)
+    public ModelAndView newProduct() {
+        ProductDTO product = new ProductDTO();
 
-		ModelAndView modelAndView = new ModelAndView("product/newProduct", "product", product);
-		return modelAndView;
-	}
+        ModelAndView modelAndView = new ModelAndView("product/newProduct", "product", product);
+        return modelAndView;
 
-	@RequestMapping(value = { "/newProduct" }, method = RequestMethod.POST)
-	public String newUserSave(ProductDTO product) throws InterruptedException, ExecutionException, IOException {
+    }
 
-		productService.insertProduct(product);
+    @Override
+    @RequestMapping(value = {"/newProduct"}, method = RequestMethod.POST)
+    public String newProductSave(ProductDTO product) throws InterruptedException, ExecutionException, IOException {
 
-		return "redirect:newProduct";
-	}
+        productService.insertProduct(product);
 
-	@RequestMapping(value = { "/productList" }, method = RequestMethod.GET)
-	public String productList(Model model) throws InterruptedException, ExecutionException, IOException {
+        return "redirect:newProduct";
+    }
 
-		productService.requestAllProducts();
+    @Override
+    @RequestMapping(value = {"/productList"}, method = RequestMethod.GET)
+    public String productList(Model model) throws InterruptedException, ExecutionException, IOException {
+
+        productService.requestAllProducts();
         Thread.sleep(2000);
-		model.addAttribute("myProducts", productService.getProductList());
-	    
-		return "product/productList";
-	}
+        model.addAttribute("myProducts", productService.getProductList());
 
-	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
-	public ModelAndView index() {
-		ModelAndView modelAndView = new ModelAndView("index");
-		return modelAndView;
-	}
+        return "product/productList";
+    }
 
-	@ExceptionHandler
-	public ModelAndView handleIllegalArgumentException(IllegalArgumentException e, HttpServletResponse response)
-			throws IOException {
-		e.printStackTrace();
-		ModelAndView modelAndView = new ModelAndView("error");
-		modelAndView.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-		return modelAndView;
-	}
+    @Override
+    @ExceptionHandler
+    public ModelAndView handleIllegalArgumentException(IllegalArgumentException e, HttpServletResponse response)
+            throws IOException {
+        e.printStackTrace();
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        return modelAndView;
+    }
 
 }

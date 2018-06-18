@@ -1,17 +1,10 @@
 package org.common.util;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.List;
+import java.io.*;
 
-public class Utilities {
+public class SerializationUtilities {
 	
-	
-	
-	
+
 	public static byte[] getBytes(Object message) {
         byte[]bytes;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

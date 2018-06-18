@@ -9,12 +9,13 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 import org.common.configuration.Configurations;
-import org.common.util.Utilities;
+import org.common.util.SerializationUtilities;
+import org.microservice.interfaces.IProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProducerService {
+public class ProducerService implements IProducerService{
 
 	private Configurations configurations;
     private ConnectionFactory factory;
@@ -37,6 +38,8 @@ public class ProducerService {
      *  This method publishes a message
      * @param message
      */
+
+    @Override
     public void produceMessage(String message) throws IOException {
 
         channel.queueDeclare(configurations.getQueueManagnent(), true, false, false, null);
@@ -52,13 +55,14 @@ public class ProducerService {
      *  This method publishes a message
      * @param message
      */
+    @Override
     public void produceMessage(Object message) throws IOException {
 
             
             
         channel.queueDeclare(configurations.getQueueManagnent(), true, false, false, null);
 
-        channel.basicPublish("", configurations.getQueueManagnent(), null, Utilities.getBytes(message));
+        channel.basicPublish("", configurations.getQueueManagnent(), null, SerializationUtilities.getBytes(message));
 
         System.out.println(" [x] Sent '" + message + "'");
           
