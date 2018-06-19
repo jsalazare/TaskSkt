@@ -1,7 +1,6 @@
 package org.nearsoft;
 
 import org.common.configuration.Configurations;
-import org.common.dto.ProductDTO;
 import org.common.rabbit.ChannelFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -10,9 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @SpringBootApplication

@@ -1,7 +1,6 @@
 package org.nearsoft.service;
 
 import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.ConnectionFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.common.interfaces.IChannelFactory;
 import org.common.interfaces.IConfigurations;
