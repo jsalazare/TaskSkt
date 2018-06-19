@@ -2,50 +2,31 @@ package org.nearsoft.service;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ConnectionFactory;
+import org.apache.commons.lang3.StringUtils;
+import org.common.interfaces.IChannelFactory;
 import org.common.interfaces.IConfigurations;
 import org.common.util.SerializationUtilities;
 import org.nearsoft.interfaces.IProducerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-;
 
 @Service
 public class ProducerService implements IProducerService{
-
+    private static final Logger logger = LoggerFactory.getLogger(ProducerService.class);
 
     private IConfigurations configurations;
 
     private Channel channel;
 
-    @Autowired
-    public ProducerService(IConfigurations configurations) throws IOException, TimeoutException {
+
+    public ProducerService(IConfigurations configurations, IChannelFactory channelFactory) throws IOException, TimeoutException {
         this.configurations = configurations;
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost(configurations.getHost());
-        factory.setUsername(configurations.getUsername());
-        factory.setPassword(configurations.getPassword());
-        channel = factory.newConnection().createChannel();
-    }
-
-    /**
-     * This method publishes a message
-     *
-     * @param message
-     * @throws IOException
-     */
-
-    @Override
-    public void produceMessage(String message) throws IOException {
-
-        channel.queueDeclare(configurations.getQueueMicroservice(), true, false, false, null);
-
-        channel.basicPublish("", configurations.getQueueMicroservice(), null, SerializationUtilities.getBytes(message));
-
-        System.out.println(" [x] Sent '" + message + "'");
+        channel = channelFactory.getNewChannel();
 
     }
 
@@ -61,9 +42,9 @@ public class ProducerService implements IProducerService{
 
         channel.queueDeclare(configurations.getQueueMicroservice(), true, false, false, null);
 
-        channel.basicPublish("", configurations.getQueueMicroservice(), null, SerializationUtilities.getBytes(message));
+        channel.basicPublish(StringUtils.EMPTY, configurations.getQueueMicroservice(), null, SerializationUtilities.getBytes(message));
 
-        System.out.println(" [x] Sent '" + message + "'");
+        logger.debug(" [x] Sent '" + message + "'");
 
     }
 

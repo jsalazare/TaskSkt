@@ -1,32 +1,28 @@
 package org.microservice.service;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.TimeoutException;
-
-import javax.annotation.PostConstruct;
-
-import org.common.configuration.Configurations;
+import com.rabbitmq.client.*;
 import org.common.dto.ProductDTO;
+import org.common.interfaces.IChannelFactory;
 import org.common.interfaces.IConfigurations;
 import org.common.util.SerializationUtilities;
 import org.microservice.interfaces.IConsumerService;
 import org.microservice.interfaces.IProducerService;
 import org.microservice.repository.ProductRepository;
 import org.microservice.util.ProductUtilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.rabbitmq.client.AMQP;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.Consumer;
-import com.rabbitmq.client.DefaultConsumer;
-import com.rabbitmq.client.Envelope;
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 @Service
 public class ConsumerService implements IConsumerService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ConsumerService.class);
 
 	private IConfigurations configurations;
 	private ProductRepository productRepository;
@@ -34,16 +30,12 @@ public class ConsumerService implements IConsumerService {
 
 	private Channel channel;
 
-	@Autowired
-	public ConsumerService(ProductRepository productRepository, IProducerService producerService, IConfigurations configurations) throws IOException, TimeoutException {
+
+	public ConsumerService(ProductRepository productRepository, IProducerService producerService, IConfigurations configurations, IChannelFactory channelFactory) throws IOException, TimeoutException {
 		this.configurations = configurations;
 		this.producerService = producerService;
 		this.productRepository = productRepository;
-		ConnectionFactory factory = new ConnectionFactory();
-		factory.setHost(configurations.getHost());
-		factory.setUsername(configurations.getUsername());
-		factory.setPassword(configurations.getPassword());
-		channel = factory.newConnection().createChannel();
+		channel = channelFactory.getNewChannel();
 	}
 
 	@Override
@@ -66,7 +58,7 @@ public class ConsumerService implements IConsumerService {
 					} else if (message instanceof ProductDTO) {
 						ProductDTO product = (ProductDTO) SerializationUtilities.fromBytes(body);
 
-						System.out.println(" [x] Received '" + body + "'");
+
 						productRepository.insertProduct(product.getName(), product.getLength(), product.getWidth(),
 								product.getHeight(), product.getWeight());
 					}

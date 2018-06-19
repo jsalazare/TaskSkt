@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-/**
- * Created by jsalazar on 6/18/18.
- */
+
 public interface IProductController {
 
     ModelAndView newProduct();

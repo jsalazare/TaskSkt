@@ -1,0 +1,6 @@
+rabbit:
+  username: admin
+  password: admin
+  host: localhost
+  queueManagnent: microservice-management
+  queueMicroservice: management-microservice

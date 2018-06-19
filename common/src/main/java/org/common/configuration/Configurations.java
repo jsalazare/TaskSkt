@@ -1,7 +1,9 @@
 package org.common.configuration;
 
 import org.common.interfaces.IConfigurations;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class Configurations implements IConfigurations {
 
     private String username;

@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-/**
- * Created by jsalazar on 6/18/18.
- */
+
 public interface IProductService {
 
 

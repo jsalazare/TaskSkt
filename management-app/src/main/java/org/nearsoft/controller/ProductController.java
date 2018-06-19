@@ -24,7 +24,7 @@ import java.util.concurrent.ExecutionException;
 
 //add general paths
 
-@RequestMapping("product/")
+@RequestMapping("/product")
 @Controller
 public class ProductController implements IProductController{
 

@@ -5,9 +5,7 @@ import com.rabbitmq.client.Consumer;
 
 import java.io.IOException;
 
-/**
- * Created by jsalazar on 6/18/18.
- */
+
 public interface IConsumerService {
 
      Channel getChannel();

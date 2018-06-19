@@ -1,6 +1,4 @@
-/**
- * Created by jsalaza   r on 6/14/18.
- */
+
 function validate() {
     var name = document.getElementById("name");
     var length = document.getElementById("length");

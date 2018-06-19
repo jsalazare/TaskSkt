@@ -27,7 +27,7 @@ public class ProductService implements IProductService {
 	private IProducerService producerService;
 	private IConsumerService consumerService;
 
-	@Autowired
+
 	public ProductService(ProducerService producerService, ConsumerService consumerService) {
 		this.producerService = producerService;
 		this.consumerService = consumerService;
