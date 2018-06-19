@@ -8,6 +8,7 @@ import org.common.dto.ProductDTO;
 import org.common.interfaces.IChannelFactory;
 import org.common.interfaces.IConfigurations;
 import org.common.util.SerializationUtilities;
+import org.nearsoft.interfaces.IRPCClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -21,23 +22,17 @@ import java.util.concurrent.TimeoutException;
 
 
 @Service
-public class ProducerService2{
-    private static final Logger logger = LoggerFactory.getLogger(ProducerService2.class);
+public class RPClientService implements IRPCClientService {
 
     private IConfigurations configurations;
 
     private Channel channel;
 
-    private String requestQueueName = "rpc_queue";
-    private String replyQueueName;
 
     private IChannelFactory channelFactory;
 
-
-    public ProducerService2(IConfigurations configurations, IChannelFactory channelFactory) throws IOException, TimeoutException {
+    public RPClientService(IConfigurations configurations, IChannelFactory channelFactory) throws IOException, TimeoutException {
         this.configurations = configurations;
-        channel = channelFactory.getNewChannel();
-        replyQueueName = channel.queueDeclare().getQueue();
         this.channelFactory = channelFactory;
     }
 
@@ -51,7 +46,7 @@ public class ProducerService2{
     public List<ProductDTO> produceMessage(Object message) throws IOException, InterruptedException, TimeoutException {
 
         channel = channelFactory.getNewChannel();
-        replyQueueName = channel.queueDeclare().getQueue();
+        String replyQueueName = channel.queueDeclare().getQueue();
 
         final String corrId = UUID.randomUUID().toString();
 
@@ -61,7 +56,7 @@ public class ProducerService2{
                 .replyTo(replyQueueName)
                 .build();
 
-        channel.basicPublish("", requestQueueName, props,SerializationUtilities.getBytes(message));
+        channel.basicPublish("", configurations.getRpcQueue(), props,SerializationUtilities.getBytes(message));
 
         final BlockingQueue<List<ProductDTO>> response = new ArrayBlockingQueue<List<ProductDTO>>(1);
 

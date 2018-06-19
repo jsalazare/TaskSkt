@@ -7,6 +7,7 @@ import org.common.interfaces.IConfigurations;
 import org.common.util.SerializationUtilities;
 import org.microservice.interfaces.IConsumerService;
 import org.microservice.interfaces.IProducerService;
+import org.microservice.interfaces.IRPCServerService;
 import org.microservice.repository.ProductRepository;
 import org.microservice.util.ProductUtilities;
 import org.springframework.stereotype.Service;
@@ -18,19 +19,16 @@ import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 @Service
-public class ConsumerService2 {
+public class RPCServerService implements IRPCServerService {
 
 
 	private IConfigurations configurations;
 	private ProductRepository productRepository;
-	private IProducerService producerService;
-	private static final String RPC_QUEUE_NAME = "rpc_queue";
 	private Channel channel;
 
 
-	public ConsumerService2(ProductRepository productRepository, IProducerService producerService, IConfigurations configurations, IChannelFactory channelFactory) throws IOException, TimeoutException {
+	public RPCServerService(ProductRepository productRepository, IConfigurations configurations, IChannelFactory channelFactory) throws IOException, TimeoutException {
 		this.configurations = configurations;
-		this.producerService = producerService;
 		this.productRepository = productRepository;
 		channel = channelFactory.getNewChannel();
 
@@ -39,7 +37,7 @@ public class ConsumerService2 {
 
 	public void listenerService() throws IOException {
 
-		channel.queueDeclare(RPC_QUEUE_NAME, true, false, false, null);
+		channel.queueDeclare(configurations.getRpcQueue(), true, false, false, null);
 		channel.basicQos(1);
 		Consumer consumer = new DefaultConsumer(channel) {
 			@Override
@@ -52,25 +50,11 @@ public class ConsumerService2 {
 				String response = "";
 				List<ProductDTO> products =  new ArrayList<ProductDTO>();
 				try {
-
-					Object message = SerializationUtilities.fromBytes(body);
-					if (message instanceof String) {
-						if (message.equals("getAllProducts")) {
-
-							 products = ProductUtilities
-									.fromProductToProductDTO(productRepository.getAllProducts());
-							producerService.produceMessage(products);
-						}
-					} else if (message instanceof ProductDTO) {
-						ProductDTO product = (ProductDTO) SerializationUtilities.fromBytes(body);
-
-
-						productRepository.insertProduct(product.getName(), product.getLength(), product.getWidth(),
-								product.getHeight(), product.getWeight());
-					}
+					 products = ProductUtilities
+							.fromProductToProductDTO(productRepository.getAllProducts());
 
 				} catch (RuntimeException e) {
-					System.out.println(" [.] " + e.toString());
+					e.printStackTrace();
 				} finally {
 					channel.basicPublish("", properties.getReplyTo(), replyProps, SerializationUtilities.getBytes(products));
 					channel.basicAck(envelope.getDeliveryTag(), false);
@@ -82,7 +66,7 @@ public class ConsumerService2 {
 
 			}
 		};
-		channel.basicConsume(RPC_QUEUE_NAME, false, consumer);
+		channel.basicConsume(configurations.getRpcQueue(), false, consumer);
 		// Wait and be prepared to consume the message from RPC client.
 		while (true) {
 			synchronized (consumer) {

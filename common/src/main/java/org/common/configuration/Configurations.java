@@ -11,6 +11,7 @@ public class Configurations implements IConfigurations {
     private String host;
     private String queueManagnent;
     private String queueMicroservice;
+    private String rpcQueue;
 
 
     @Override
@@ -64,5 +65,13 @@ public class Configurations implements IConfigurations {
         this.queueMicroservice = queueMicroservice;
     }
 
+    @Override
+    public String getRpcQueue() {
+        return rpcQueue;
+    }
 
+    @Override
+    public void setRpcQueue(String rpcQueue) {
+        this.rpcQueue = rpcQueue;
+    }
 }

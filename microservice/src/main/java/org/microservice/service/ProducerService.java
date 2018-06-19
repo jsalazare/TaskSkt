@@ -35,8 +35,6 @@ public class ProducerService implements IProducerService{
      */
     @Override
     public void produceMessage(Object message) throws IOException {
-
-            
             
         channel.queueDeclare(configurations.getQueueManagnent(), true, false, false, null);
 

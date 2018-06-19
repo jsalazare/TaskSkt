@@ -62,7 +62,6 @@ public class ProductController implements IProductController{
     public String productList(Model model) throws InterruptedException, ExecutionException, IOException, TimeoutException {
 
     	List<ProductDTO> products = productService.requestAllProducts();
-        Thread.sleep(2000);
         model.addAttribute("myProducts", products);
 
         return "product/productList";

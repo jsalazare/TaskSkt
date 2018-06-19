@@ -44,23 +44,12 @@ public class ConsumerService implements IConsumerService {
 				@Override
 				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
 						byte[] body) throws IOException {
-
 					Object message = SerializationUtilities.fromBytes(body);
-					if (message instanceof String) {
-						if (message.equals("getAllProducts")) {
-
-							List<ProductDTO> products = ProductUtilities
-									.fromProductToProductDTO(productRepository.getAllProducts());
-							producerService.produceMessage(products);
-						}
-					} else if (message instanceof ProductDTO) {
+					if (message instanceof ProductDTO) {
 						ProductDTO product = (ProductDTO) SerializationUtilities.fromBytes(body);
-
-
 						productRepository.insertProduct(product.getName(), product.getLength(), product.getWidth(),
 								product.getHeight(), product.getWeight());
 					}
-
 				}
 			};
 			channel.basicConsume(configurations.getQueueMicroservice(), true, consumer);

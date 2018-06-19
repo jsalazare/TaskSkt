@@ -21,4 +21,8 @@ public interface IConfigurations {
     String getQueueMicroservice();
 
     void setQueueMicroservice(String queueMicroservice);
+
+    public String getRpcQueue();
+
+    public void setRpcQueue(String rpcQueue);
 }

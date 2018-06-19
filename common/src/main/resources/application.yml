@@ -4,3 +4,4 @@ rabbit:
   host: localhost
   queueManagnent: microservice-management
   queueMicroservice: management-microservice
+  rpcQueue: rpc_queue

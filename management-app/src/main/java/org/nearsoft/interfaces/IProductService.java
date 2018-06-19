@@ -15,5 +15,4 @@ public interface IProductService {
 
     void insertProduct(ProductDTO product) throws IOException, InterruptedException, TimeoutException;
 
-    List<ProductDTO> getProductList();
 }
