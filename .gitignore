@@ -11,6 +11,7 @@ microservice/target
 .DS_Store
 
 *.class
+*.log
 
 ### STS ###
 .apt_generated
