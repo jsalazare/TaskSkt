@@ -38,7 +38,6 @@
 							<td>${product.weight}</td>
 						</tr>
 					</c:forEach>
-					<!-- close table -->
 				</table>
 				<div id="browse_app">
 					<a class="btn btn-large btn-info" href="newProduct">Add New Product</a>
@@ -46,7 +45,5 @@
 			</div>
 		</div>
 	</div>
-	<!-- provide an html table start tag -->
-
 </body>
 </html>

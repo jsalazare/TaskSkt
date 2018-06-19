@@ -32,9 +32,7 @@ import javax.persistence.Table;
 		})
 public class Product implements Serializable {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -108097060161639783L;
 
 	

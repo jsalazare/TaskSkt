@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
 
-public interface IProductController {
+public interface ProductController {
 
     ModelAndView newProduct();
 

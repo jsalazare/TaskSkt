@@ -1,14 +1,13 @@
 package org.microservice;
 
 import org.common.configuration.Configurations;
-import org.common.rabbit.ChannelFactory;
+import org.common.rabbit.ChannelFactoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.io.IOException;
@@ -33,9 +32,10 @@ public class App {
     public Configurations configurations(){
         return new Configurations();
     }
+
     @Bean
-    public ChannelFactory channelFactory(){
-        return new ChannelFactory (context.getBean(Configurations.class));
+    public ChannelFactoryImpl channelFactory(){
+        return new ChannelFactoryImpl(context.getBean(Configurations.class));
     }
 
     @ExceptionHandler

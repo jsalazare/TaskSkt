@@ -1,7 +1,7 @@
 package org.nearsoft;
 
 import org.common.configuration.Configurations;
-import org.common.rabbit.ChannelFactory;
+import org.common.rabbit.ChannelFactoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -31,7 +31,7 @@ public class WebApplication {
     }
 
     @Bean
-    public ChannelFactory channelFactory(){
-        return new ChannelFactory (context.getBean(Configurations.class));
+    public ChannelFactoryImpl channelFactory(){
+        return new ChannelFactoryImpl(context.getBean(Configurations.class));
     }
 }

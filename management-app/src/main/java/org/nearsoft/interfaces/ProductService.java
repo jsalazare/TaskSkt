@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
 
-public interface IProductService {
+public interface ProductService {
 
 
 	List<ProductDTO> requestAllProducts() throws InterruptedException, ExecutionException, IOException, TimeoutException;

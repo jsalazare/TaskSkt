@@ -1,37 +1,29 @@
 package org.microservice.service;
 
 import com.rabbitmq.client.*;
+import org.common.configuration.Configurations;
 import org.common.dto.ProductDTO;
-import org.common.interfaces.IChannelFactory;
-import org.common.interfaces.IConfigurations;
+import org.common.interfaces.ChannelFactory;
 import org.common.util.SerializationUtilities;
-import org.microservice.interfaces.IConsumerService;
-import org.microservice.interfaces.IProducerService;
 import org.microservice.repository.ProductRepository;
-import org.microservice.util.ProductUtilities;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 @Service
-public class ConsumerService implements IConsumerService {
+public class ConsumerServiceImpl implements org.microservice.interfaces.ConsumerService {
 
 
-	private IConfigurations configurations;
+	private Configurations configurations;
 	private ProductRepository productRepository;
-	private IProducerService producerService;
 
 	private Channel channel;
 
 
-	public ConsumerService(ProductRepository productRepository, IProducerService producerService, IConfigurations configurations, IChannelFactory channelFactory) throws IOException, TimeoutException {
+	public ConsumerServiceImpl(ProductRepository productRepository, Configurations configurations, ChannelFactory channelFactory) throws IOException, TimeoutException {
 		this.configurations = configurations;
-		this.producerService = producerService;
 		this.productRepository = productRepository;
 		channel = channelFactory.getNewChannel();
 	}

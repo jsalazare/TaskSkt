@@ -4,13 +4,11 @@ import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
+import org.common.configuration.Configurations;
 import org.common.dto.ProductDTO;
-import org.common.interfaces.IChannelFactory;
-import org.common.interfaces.IConfigurations;
+import org.common.interfaces.ChannelFactory;
 import org.common.util.SerializationUtilities;
-import org.nearsoft.interfaces.IRPCClientService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.nearsoft.interfaces.RPCClientService;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -22,16 +20,13 @@ import java.util.concurrent.TimeoutException;
 
 
 @Service
-public class RPClientService implements IRPCClientService {
+public class RPClientServiceImpl implements RPCClientService {
 
-    private IConfigurations configurations;
+    private Configurations configurations;
 
-    private Channel channel;
+    private ChannelFactory channelFactory;
 
-
-    private IChannelFactory channelFactory;
-
-    public RPClientService(IConfigurations configurations, IChannelFactory channelFactory) throws IOException, TimeoutException {
+    public RPClientServiceImpl(Configurations configurations, ChannelFactory channelFactory) throws IOException, TimeoutException {
         this.configurations = configurations;
         this.channelFactory = channelFactory;
     }
@@ -45,7 +40,7 @@ public class RPClientService implements IRPCClientService {
 
     public List<ProductDTO> produceMessage(Object message) throws IOException, InterruptedException, TimeoutException {
 
-        channel = channelFactory.getNewChannel();
+        Channel channel = channelFactory.getNewChannel();
         String replyQueueName = channel.queueDeclare().getQueue();
 
         final String corrId = UUID.randomUUID().toString();

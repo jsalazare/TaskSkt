@@ -6,7 +6,7 @@ import com.rabbitmq.client.Consumer;
 import java.io.IOException;
 
 
-public interface IConsumerService {
+public interface ConsumerService {
 
      Channel getChannel();
 

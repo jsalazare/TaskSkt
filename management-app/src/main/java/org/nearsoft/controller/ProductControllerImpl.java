@@ -1,8 +1,7 @@
 package org.nearsoft.controller;
 
 import org.common.dto.ProductDTO;
-import org.nearsoft.interfaces.IProductController;
-import org.nearsoft.interfaces.IProductService;
+import org.nearsoft.interfaces.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -28,13 +27,13 @@ import java.util.concurrent.TimeoutException;
 
 @RequestMapping("/product")
 @Controller
-public class ProductController implements IProductController{
+public class ProductControllerImpl implements org.nearsoft.interfaces.ProductController {
 
 
-    private IProductService productService;
+    private ProductService productService;
 
     @Autowired
-    public ProductController(IProductService productService) {
+    public ProductControllerImpl(ProductService productService) {
         this.productService = productService;
     }
 

@@ -1,29 +1,25 @@
 package org.nearsoft.service;
 
 import org.common.dto.ProductDTO;
-import org.nearsoft.interfaces.IConsumerService;
-import org.nearsoft.interfaces.IProducerService;
-import org.nearsoft.interfaces.IProductService;
-import org.nearsoft.interfaces.IRPCClientService;
+import org.nearsoft.interfaces.ProducerService;
+import org.nearsoft.interfaces.RPCClientService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
 
 @Service
-public class ProductService implements IProductService {
+public class ProductServiceImpl implements org.nearsoft.interfaces.ProductService {
 
 
-	private IRPCClientService rpcClientService;
-	private IProducerService producerService;
+	private RPCClientService rpcClientService;
+	private ProducerService producerService;
 
 
-	public ProductService(IProducerService producerService, IRPCClientService rpcClientService) {
+	public ProductServiceImpl(ProducerService producerService, RPCClientService rpcClientService) {
 		this.producerService = producerService;
 		this.rpcClientService = rpcClientService;
 	}

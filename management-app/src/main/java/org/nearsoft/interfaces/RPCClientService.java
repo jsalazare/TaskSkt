@@ -9,7 +9,7 @@ import java.util.concurrent.TimeoutException;
 /**
  * Created by jsalazar on 6/18/18.
  */
-public interface IRPCClientService {
+public interface RPCClientService {
 
     List<ProductDTO> produceMessage(Object message) throws IOException, InterruptedException, TimeoutException;
 }

@@ -3,7 +3,7 @@ package org.microservice.interfaces;
 import java.io.IOException;
 
 
-public interface IConsumerService {
+public interface ConsumerService {
 
     void listenerService() throws IOException;
 }
