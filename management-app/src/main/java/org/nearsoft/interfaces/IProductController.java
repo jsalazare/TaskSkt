@@ -7,15 +7,16 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 
 public interface IProductController {
 
     ModelAndView newProduct();
 
-    String newProductSave(ProductDTO product) throws InterruptedException, ExecutionException, IOException;
+    String newProductSave(ProductDTO product) throws InterruptedException, ExecutionException, IOException, TimeoutException;
 
-    String productList(Model model) throws InterruptedException, ExecutionException, IOException;
+    String productList(Model model) throws InterruptedException, ExecutionException, IOException, TimeoutException;
 
     ModelAndView handleIllegalArgumentException(IllegalArgumentException e, HttpServletResponse response) throws IOException;
 }

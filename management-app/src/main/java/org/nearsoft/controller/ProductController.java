@@ -14,7 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 /*
  * 
@@ -48,7 +50,7 @@ public class ProductController implements IProductController{
 
     @Override
     @RequestMapping(value = {"/newProduct"}, method = RequestMethod.POST)
-    public String newProductSave(ProductDTO product) throws InterruptedException, ExecutionException, IOException {
+    public String newProductSave(ProductDTO product) throws InterruptedException, ExecutionException, IOException, TimeoutException {
 
         productService.insertProduct(product);
 
@@ -57,11 +59,11 @@ public class ProductController implements IProductController{
 
     @Override
     @RequestMapping(value = {"/productList"}, method = RequestMethod.GET)
-    public String productList(Model model) throws InterruptedException, ExecutionException, IOException {
+    public String productList(Model model) throws InterruptedException, ExecutionException, IOException, TimeoutException {
 
-        productService.requestAllProducts();
+    	List<ProductDTO> products = productService.requestAllProducts();
         Thread.sleep(2000);
-        model.addAttribute("myProducts", productService.getProductList());
+        model.addAttribute("myProducts", products);
 
         return "product/productList";
     }

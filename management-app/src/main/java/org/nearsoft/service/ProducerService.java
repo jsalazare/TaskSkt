@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 
-@Service
+
 public class ProducerService implements IProducerService{
     private static final Logger logger = LoggerFactory.getLogger(ProducerService.class);
 
