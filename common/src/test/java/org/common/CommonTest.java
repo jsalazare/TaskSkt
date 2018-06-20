@@ -3,7 +3,7 @@ package org.common;
 
 import com.rabbitmq.client.Channel;
 import org.common.configuration.Configurations;
-import org.common.dto.ProductDTO;
+import org.common.dbmodel.Product;
 import org.common.interfaces.ChannelFactory;
 import org.common.util.SerializationUtilities;
 import org.junit.BeforeClass;
@@ -65,8 +65,8 @@ public class CommonTest {
 
     @Test
     public void productDTOShouldInstanciate() throws Exception {
-        ProductDTO p = new ProductDTO();
-        p.setId(0);
+        Product p = new Product();
+        p.setId(0L);
         p.setHeight(1.0f);
         p.setLength(1);
         p.setName("name1");

@@ -1,7 +1,6 @@
 package org.nearsoft.interfaces;
 
 import org.common.dbmodel.Product;
-import org.common.dto.ProductDTO;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,6 +13,6 @@ public interface ProductService {
 
 	List<Product> requestAllProducts() throws InterruptedException, ExecutionException, IOException, TimeoutException;
 
-    void insertProduct(ProductDTO product) throws IOException, InterruptedException, TimeoutException;
+    void insertProduct(Product product) throws IOException, InterruptedException, TimeoutException;
 
 }

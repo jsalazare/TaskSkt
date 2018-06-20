@@ -3,12 +3,10 @@ package org.microservice.service;
 import com.rabbitmq.client.*;
 import org.common.configuration.Configurations;
 import org.common.dbmodel.Product;
-import org.common.dto.ProductDTO;
 import org.common.interfaces.ChannelFactory;
 import org.common.util.SerializationUtilities;
 import org.microservice.interfaces.RPCServerService;
 import org.microservice.repository.ProductRepository;
-import org.microservice.util.ProductUtilities;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;

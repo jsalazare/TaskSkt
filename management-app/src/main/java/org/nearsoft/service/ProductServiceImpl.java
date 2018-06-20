@@ -1,7 +1,6 @@
 package org.nearsoft.service;
 
 import org.common.dbmodel.Product;
-import org.common.dto.ProductDTO;
 import org.nearsoft.interfaces.ProducerService;
 import org.nearsoft.interfaces.ProductService;
 import org.nearsoft.interfaces.RPCClientService;
@@ -34,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void insertProduct(ProductDTO product) throws IOException, InterruptedException, TimeoutException {
+	public void insertProduct(Product product) throws IOException, InterruptedException, TimeoutException {
 		producerService.produceMessage(product);
 	}
 

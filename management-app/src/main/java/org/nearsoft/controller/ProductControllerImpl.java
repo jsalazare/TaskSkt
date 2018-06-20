@@ -1,8 +1,6 @@
 package org.nearsoft.controller;
 
 import org.common.dbmodel.Product;
-import org.common.dto.ProductDTO;
-import org.nearsoft.interfaces.ProductController;
 import org.nearsoft.interfaces.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +27,7 @@ import java.util.concurrent.TimeoutException;
 
 @RequestMapping("/product")
 @Controller
-public class ProductControllerImpl implements ProductController {
+public class ProductControllerImpl {
 
 
     private ProductService productService;
@@ -39,26 +37,23 @@ public class ProductControllerImpl implements ProductController {
         this.productService = productService;
     }
 
-    @Override
     @RequestMapping(value = {"/newProduct"}, method = RequestMethod.GET)
     public String newProduct(Model model) {
-        ProductDTO product = new ProductDTO();
+        Product product = new Product();
 
         model.addAttribute("product", product);
         return "product/newProduct";
 
     }
 
-    @Override
     @RequestMapping(value = {"/newProduct"}, method = RequestMethod.POST)
-    public String newProductSave(ProductDTO product) throws InterruptedException, ExecutionException, IOException, TimeoutException {
+    public String newProductSave(Product product) throws InterruptedException, ExecutionException, IOException, TimeoutException {
 
         productService.insertProduct(product);
 
         return "redirect:newProduct";
     }
 
-    @Override
     @RequestMapping(value = {"/productList"}, method = RequestMethod.GET)
     public String productList(Model model) throws InterruptedException, ExecutionException, IOException, TimeoutException {
 
@@ -68,7 +63,6 @@ public class ProductControllerImpl implements ProductController {
         return "product/productList";
     }
 
-    @Override
     @ExceptionHandler
     public ModelAndView handleIllegalArgumentException(IllegalArgumentException e, HttpServletResponse response, ModelAndView modelAndView)
             throws IOException {

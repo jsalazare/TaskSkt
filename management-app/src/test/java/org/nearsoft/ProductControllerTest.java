@@ -4,16 +4,13 @@ package org.nearsoft;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.nearsoft.interfaces.ProductController;
+import org.nearsoft.controller.ProductControllerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
@@ -25,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ProductControllerTest {
 
 	@Autowired
-	private ProductController productController;
+	private ProductControllerImpl productController;
 
 	@BeforeClass
 	public static void beforeClass() throws Exception {

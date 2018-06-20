@@ -6,7 +6,6 @@ import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 import org.common.configuration.Configurations;
 import org.common.dbmodel.Product;
-import org.common.dto.ProductDTO;
 import org.common.interfaces.ChannelFactory;
 import org.common.util.SerializationUtilities;
 import org.nearsoft.interfaces.RPCClientService;
