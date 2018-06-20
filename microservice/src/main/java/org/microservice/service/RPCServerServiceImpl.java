@@ -5,6 +5,7 @@ import org.common.configuration.Configurations;
 import org.common.dto.ProductDTO;
 import org.common.interfaces.ChannelFactory;
 import org.common.util.SerializationUtilities;
+import org.microservice.interfaces.RPCServerService;
 import org.microservice.repository.ProductRepository;
 import org.microservice.util.ProductUtilities;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 @Service
-public class RPCServerServiceImpl implements org.microservice.interfaces.RPCServerService {
+public class RPCServerServiceImpl implements RPCServerService {
 
 
     private Configurations configurations;

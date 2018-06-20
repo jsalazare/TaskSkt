@@ -1,9 +1,10 @@
 package org.common.rabbit;
 
 
-import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.ConnectionFactory;
 import org.common.configuration.Configurations;
+import org.common.interfaces.ChannelFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -11,7 +12,7 @@ import java.util.concurrent.TimeoutException;
 
 
 @Component
-public class ChannelFactoryImpl implements org.common.interfaces.ChannelFactory {
+public class ChannelFactoryImpl implements ChannelFactory {
 
 
     private Configurations configurations;

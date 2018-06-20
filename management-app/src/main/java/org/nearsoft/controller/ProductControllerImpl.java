@@ -1,6 +1,7 @@
 package org.nearsoft.controller;
 
 import org.common.dto.ProductDTO;
+import org.nearsoft.interfaces.ProductController;
 import org.nearsoft.interfaces.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ import java.util.concurrent.TimeoutException;
 
 @RequestMapping("/product")
 @Controller
-public class ProductControllerImpl implements org.nearsoft.interfaces.ProductController {
+public class ProductControllerImpl implements ProductController {
 
 
     private ProductService productService;
@@ -39,11 +40,11 @@ public class ProductControllerImpl implements org.nearsoft.interfaces.ProductCon
 
     @Override
     @RequestMapping(value = {"/newProduct"}, method = RequestMethod.GET)
-    public ModelAndView newProduct() {
+    public String newProduct(Model model) {
         ProductDTO product = new ProductDTO();
 
-        ModelAndView modelAndView = new ModelAndView("product/newProduct", "product", product);
-        return modelAndView;
+        model.addAttribute("product", product);
+        return "product/newProduct";
 
     }
 

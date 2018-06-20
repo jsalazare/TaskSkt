@@ -5,6 +5,7 @@ import org.common.configuration.Configurations;
 import org.common.dto.ProductDTO;
 import org.common.interfaces.ChannelFactory;
 import org.common.util.SerializationUtilities;
+import org.microservice.interfaces.ConsumerService;
 import org.microservice.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 @Service
-public class ConsumerServiceImpl implements org.microservice.interfaces.ConsumerService {
+public class ConsumerServiceImpl implements ConsumerService {
 
 
 	private Configurations configurations;

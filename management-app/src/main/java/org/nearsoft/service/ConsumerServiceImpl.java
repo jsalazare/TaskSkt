@@ -4,13 +4,14 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Consumer;
 import org.common.configuration.Configurations;
 import org.common.interfaces.ChannelFactory;
+import org.nearsoft.interfaces.ConsumerService;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 @Service
-public class ConsumerServiceImpl implements org.nearsoft.interfaces.ConsumerService {
+public class ConsumerServiceImpl implements ConsumerService {
 
     private Configurations configurations;
 

@@ -2,6 +2,7 @@ package org.nearsoft.service;
 
 import org.common.dto.ProductDTO;
 import org.nearsoft.interfaces.ProducerService;
+import org.nearsoft.interfaces.ProductService;
 import org.nearsoft.interfaces.RPCClientService;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.concurrent.TimeoutException;
 
 
 @Service
-public class ProductServiceImpl implements org.nearsoft.interfaces.ProductService {
+public class ProductServiceImpl implements ProductService {
 
 
 	private RPCClientService rpcClientService;

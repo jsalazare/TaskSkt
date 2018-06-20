@@ -12,7 +12,7 @@ import java.util.concurrent.TimeoutException;
 
 public interface ProductController {
 
-    ModelAndView newProduct();
+    String newProduct(Model model);
 
     String newProductSave(ProductDTO product) throws InterruptedException, ExecutionException, IOException, TimeoutException;
 

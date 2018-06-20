@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.common.configuration.Configurations;
 import org.common.interfaces.ChannelFactory;
 import org.common.util.SerializationUtilities;
+import org.microservice.interfaces.ProducerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 @Service
-public class ProducerServiceImpl implements org.microservice.interfaces.ProducerService {
+public class ProducerServiceImpl implements ProducerService {
 
     private static final Logger logger = LoggerFactory.getLogger(ProducerServiceImpl.class);
 
