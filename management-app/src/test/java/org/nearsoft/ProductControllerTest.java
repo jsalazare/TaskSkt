@@ -1,4 +1,4 @@
-package org.nearsoft.test;
+package org.nearsoft;
 
 
 import org.junit.BeforeClass;
