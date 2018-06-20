@@ -44,6 +44,8 @@ public class ProductControllerImpl {
         model.addAttribute("product", product);
         return "product/newProduct";
 
+
+
     }
 
     @RequestMapping(value = {"/newProduct"}, method = RequestMethod.POST)
