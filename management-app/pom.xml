@@ -17,6 +17,9 @@
         <jstl.version>1.2</jstl.version>
         <org.nearsoft.common.version>1.0.0-SNAPSHOT</org.nearsoft.common.version>
         <validator.version>5.3.6.Final</validator.version>
+        <easymock.version>3.6</easymock.version>
+
+
 	</properties>
 
 	<parent>
@@ -31,7 +34,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-amqp</artifactId>
@@ -45,6 +47,12 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${validator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+            <version>${easymock.version}</version>
+            <scope>test</scope>
         </dependency>
 
 		<dependency>

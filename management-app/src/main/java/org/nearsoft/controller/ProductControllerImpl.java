@@ -69,10 +69,10 @@ public class ProductControllerImpl implements ProductController {
 
     @Override
     @ExceptionHandler
-    public ModelAndView handleIllegalArgumentException(IllegalArgumentException e, HttpServletResponse response)
+    public ModelAndView handleIllegalArgumentException(IllegalArgumentException e, HttpServletResponse response, ModelAndView modelAndView)
             throws IOException {
         e.printStackTrace();
-        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.setViewName("error");
         modelAndView.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         return modelAndView;
     }

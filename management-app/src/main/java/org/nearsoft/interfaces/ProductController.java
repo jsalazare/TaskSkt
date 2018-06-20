@@ -18,5 +18,5 @@ public interface ProductController {
 
     String productList(Model model) throws InterruptedException, ExecutionException, IOException, TimeoutException;
 
-    ModelAndView handleIllegalArgumentException(IllegalArgumentException e, HttpServletResponse response) throws IOException;
+    ModelAndView handleIllegalArgumentException(IllegalArgumentException e, HttpServletResponse response, ModelAndView modelAndView) throws IOException;
 }

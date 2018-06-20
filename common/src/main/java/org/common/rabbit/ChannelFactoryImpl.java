@@ -14,14 +14,13 @@ import java.util.concurrent.TimeoutException;
 @Component
 public class ChannelFactoryImpl implements ChannelFactory {
 
-
     private Configurations configurations;
-
 
     public ChannelFactoryImpl(Configurations configurations){
         this.configurations = configurations;
 
     }
+
     public Channel getNewChannel () throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(configurations.getHost());
