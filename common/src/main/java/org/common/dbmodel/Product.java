@@ -1,19 +1,8 @@
-package org.microservice.dbmodel;
+package org.common.dbmodel;
 
-import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.persistence.*;
 import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedStoredProcedureQueries;
-import javax.persistence.NamedStoredProcedureQuery;
-import javax.persistence.ParameterMode;
-import javax.persistence.StoredProcedureParameter;
-import javax.persistence.Table;
 
 
 
@@ -42,23 +31,18 @@ public class Product implements Serializable {
 	private Long id;
 	
 	@Column(name = "name")
-	@NotEmpty(message = "*Please provide your name")
 	private String name;
 
 	@Column(name = "length")
-	@NotEmpty(message = "*Please provide a length")
 	private int length;
 
 	@Column(name = "width")
-	@NotEmpty(message = "*Please provide a width")
 	private int width;
 
 	@Column(name = "heigth")
-	@NotEmpty(message = "*Please provide your a heigth")
 	private float height;
 
 	@Column(name = "weight")
-	@NotEmpty(message = "*Please provide a weight")
 	private float weight;
 
 	
@@ -114,8 +98,5 @@ public class Product implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
-	
-	
 
 }

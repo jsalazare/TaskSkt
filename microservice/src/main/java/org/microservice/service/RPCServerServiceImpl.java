@@ -2,6 +2,7 @@ package org.microservice.service;
 
 import com.rabbitmq.client.*;
 import org.common.configuration.Configurations;
+import org.common.dbmodel.Product;
 import org.common.dto.ProductDTO;
 import org.common.interfaces.ChannelFactory;
 import org.common.util.SerializationUtilities;
@@ -42,8 +43,7 @@ public class RPCServerServiceImpl implements RPCServerService {
                         .correlationId(properties.getCorrelationId())
                         .build();
 
-                List<ProductDTO> products = ProductUtilities
-                        .fromProductToProductDTO(productRepository.getAllProducts());
+                List<Product> products = productRepository.getAllProducts();
 
                 channel.basicPublish("", properties.getReplyTo(), replyProps, SerializationUtilities.getBytes(products));
                 channel.basicAck(envelope.getDeliveryTag(), false);

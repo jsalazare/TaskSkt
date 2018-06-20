@@ -1,9 +1,7 @@
 package org.microservice.test;
 
 
-import java.util.List;
-
-import org.microservice.dbmodel.Product;
+import org.common.dbmodel.Product;
 import org.microservice.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 

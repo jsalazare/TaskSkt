@@ -2,6 +2,7 @@ package org.microservice.service;
 
 import com.rabbitmq.client.*;
 import org.common.configuration.Configurations;
+import org.common.dbmodel.Product;
 import org.common.dto.ProductDTO;
 import org.common.interfaces.ChannelFactory;
 import org.common.util.SerializationUtilities;
@@ -38,8 +39,8 @@ public class ConsumerServiceImpl implements ConsumerService {
 				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
 						byte[] body) throws IOException {
 					Object message = SerializationUtilities.fromBytes(body);
-					if (message instanceof ProductDTO) {
-						ProductDTO product = (ProductDTO) SerializationUtilities.fromBytes(body);
+					if (message instanceof Product) {
+						Product product = (Product) SerializationUtilities.fromBytes(body);
 						productRepository.insertProduct(product.getName(), product.getLength(), product.getWidth(),
 								product.getHeight(), product.getWeight());
 					}

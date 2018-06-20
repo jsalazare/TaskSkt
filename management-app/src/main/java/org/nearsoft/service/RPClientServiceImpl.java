@@ -5,6 +5,7 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 import org.common.configuration.Configurations;
+import org.common.dbmodel.Product;
 import org.common.dto.ProductDTO;
 import org.common.interfaces.ChannelFactory;
 import org.common.util.SerializationUtilities;
@@ -38,7 +39,7 @@ public class RPClientServiceImpl implements RPCClientService {
      * @throws IOException
      */
 
-    public List<ProductDTO> produceMessage(Object message) throws IOException, InterruptedException, TimeoutException {
+    public List<Product> produceMessage(Object message) throws IOException, InterruptedException, TimeoutException {
 
         Channel channel = channelFactory.getNewChannel();
         String replyQueueName = channel.queueDeclare().getQueue();
@@ -53,13 +54,13 @@ public class RPClientServiceImpl implements RPCClientService {
 
         channel.basicPublish("", configurations.getRpcQueue(), props,SerializationUtilities.getBytes(message));
 
-        final BlockingQueue<List<ProductDTO>> response = new ArrayBlockingQueue<List<ProductDTO>>(1);
+        final BlockingQueue<List<Product>> response = new ArrayBlockingQueue<List<Product>>(1);
 
         channel.basicConsume(replyQueueName, true, new DefaultConsumer(channel) {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 if (properties.getCorrelationId().equals(corrId)) {
-                    List<ProductDTO> list = (List<ProductDTO>) SerializationUtilities.fromBytes(body);
+                    List<Product> list = (List<Product>) SerializationUtilities.fromBytes(body);
                     response.offer(list);
                 }
             }

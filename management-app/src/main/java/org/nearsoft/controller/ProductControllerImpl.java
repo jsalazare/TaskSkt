@@ -1,5 +1,6 @@
 package org.nearsoft.controller;
 
+import org.common.dbmodel.Product;
 import org.common.dto.ProductDTO;
 import org.nearsoft.interfaces.ProductController;
 import org.nearsoft.interfaces.ProductService;
@@ -61,7 +62,7 @@ public class ProductControllerImpl implements ProductController {
     @RequestMapping(value = {"/productList"}, method = RequestMethod.GET)
     public String productList(Model model) throws InterruptedException, ExecutionException, IOException, TimeoutException {
 
-    	List<ProductDTO> products = productService.requestAllProducts();
+    	List<Product> products = productService.requestAllProducts();
         model.addAttribute("myProducts", products);
 
         return "product/productList";

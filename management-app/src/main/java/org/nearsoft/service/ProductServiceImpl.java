@@ -1,5 +1,6 @@
 package org.nearsoft.service;
 
+import org.common.dbmodel.Product;
 import org.common.dto.ProductDTO;
 import org.nearsoft.interfaces.ProducerService;
 import org.nearsoft.interfaces.ProductService;
@@ -28,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
 
 	@Override
-	public List<ProductDTO> requestAllProducts() throws InterruptedException, ExecutionException, IOException, TimeoutException {
+	public List<Product> requestAllProducts() throws InterruptedException, ExecutionException, IOException, TimeoutException {
 		return rpcClientService.produceMessage("getAllProducts");
 	}
 
