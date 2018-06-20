@@ -1,6 +1,11 @@
 package org.microservice.service;
 
-import com.rabbitmq.client.*;
+import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Consumer;
+import com.rabbitmq.client.DefaultConsumer;
+import com.rabbitmq.client.Envelope;
+import org.apache.commons.lang3.StringUtils;
 import org.common.configuration.Configurations;
 import org.common.dbmodel.Product;
 import org.common.interfaces.ChannelFactory;
@@ -30,6 +35,7 @@ public class RPCServerServiceImpl implements RPCServerService {
 
     }
 
+    @Override
     public void listenerService() throws IOException, InterruptedException {
         channel.queueDeclare(configurations.getRpcQueue(), true, false, false, null);
         channel.basicQos(1);
@@ -43,19 +49,13 @@ public class RPCServerServiceImpl implements RPCServerService {
 
                 List<Product> products = productRepository.getAllProducts();
 
-                channel.basicPublish("", properties.getReplyTo(), replyProps, SerializationUtilities.getBytes(products));
+                channel.basicPublish(StringUtils.EMPTY, properties.getReplyTo(), replyProps, SerializationUtilities.getBytes(products));
                 channel.basicAck(envelope.getDeliveryTag(), false);
-                synchronized (this) {
-                    this.notify();
-                }
+
             }
         };
         channel.basicConsume(configurations.getRpcQueue(), false, consumer);
-        while (true) {
-            synchronized (consumer) {
-                consumer.wait();
-            }
-        }
+
     }
 
 

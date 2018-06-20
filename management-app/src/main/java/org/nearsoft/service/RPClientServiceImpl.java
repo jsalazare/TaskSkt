@@ -4,6 +4,7 @@ import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
+import org.apache.commons.lang3.StringUtils;
 import org.common.configuration.Configurations;
 import org.common.dbmodel.Product;
 import org.common.interfaces.ChannelFactory;
@@ -31,12 +32,6 @@ public class RPClientServiceImpl implements RPCClientService {
         this.channelFactory = channelFactory;
     }
 
-    /**
-     * This method publishes an object
-
-     * @param message
-     * @throws IOException
-     */
 
     public List<Product> produceMessage(Object message) throws IOException, InterruptedException, TimeoutException {
 
@@ -51,7 +46,7 @@ public class RPClientServiceImpl implements RPCClientService {
                 .replyTo(replyQueueName)
                 .build();
 
-        channel.basicPublish("", configurations.getRpcQueue(), props,SerializationUtilities.getBytes(message));
+        channel.basicPublish(StringUtils.EMPTY, configurations.getRpcQueue(), props,SerializationUtilities.getBytes(message));
 
         final BlockingQueue<List<Product>> response = new ArrayBlockingQueue<List<Product>>(1);
 
